@@ -9,6 +9,7 @@ import {
   Text,
 } from "react-native";
 import cate1 from "../../../../media/cate1.jpg";
+import back from "../../../../media/backList.png";
 
 export function ListProduct() {
   const navigation = useNavigation();
@@ -33,20 +34,14 @@ export function ListProduct() {
       <ScrollView style={wrapper}>
         <View style={header}>
           <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
-            <Image
-              source={cate1}
-              style={backStyle}
-            />
+            <Image source={back} style={backStyle} />
           </TouchableOpacity>
-          <Text style={titleStyle}>Party Dress</Text>
+          <Text style={titleStyle}>SMART WATCH</Text>
           <View style={{ width: 30 }} />
         </View>
 
         <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
+          <Image source={cate1} style={productImage} />
           <View style={productInfo}>
             <Text style={txtName}>Lace Sleeve Si</Text>
             <Text style={txtPrice}>117$</Text>
@@ -61,7 +56,9 @@ export function ListProduct() {
                   borderRadius: 8,
                 }}
               />
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+              >
                 <Text style={txtShowDetail}>SHOW DETAIL</Text>
               </TouchableOpacity>
             </View>
@@ -69,10 +66,7 @@ export function ListProduct() {
         </View>
 
         <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
+          <Image source={cate1} style={productImage} />
           <View style={productInfo}>
             <Text style={txtName}>Lace Sleeve Si</Text>
             <Text style={txtPrice}>117$</Text>
@@ -87,7 +81,9 @@ export function ListProduct() {
                   borderRadius: 8,
                 }}
               />
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+              >
                 <Text style={txtShowDetail}>SHOW DETAIL</Text>
               </TouchableOpacity>
             </View>
@@ -95,10 +91,7 @@ export function ListProduct() {
         </View>
 
         <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
+          <Image source={cate1} style={productImage} />
           <View style={productInfo}>
             <Text style={txtName}>Lace Sleeve Si</Text>
             <Text style={txtPrice}>117$</Text>
@@ -113,85 +106,9 @@ export function ListProduct() {
                   borderRadius: 8,
                 }}
               />
-              <TouchableOpacity>
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-              />
-              <TouchableOpacity>
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-              />
-              <TouchableOpacity>
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={productContainer}>
-          <Image
-            source={cate1}
-            style={productImage}
-          />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-              />
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+              >
                 <Text style={txtShowDetail}>SHOW DETAIL</Text>
               </TouchableOpacity>
             </View>
@@ -259,17 +176,11 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   txtPrice: {
-
     color: "#B10D65",
   },
-  txtMaterial: {
-
-  },
-  txtColor: {
-
-  },
+  txtMaterial: {},
+  txtColor: {},
   txtShowDetail: {
-
     color: "#B10D65",
     fontSize: 11,
   },

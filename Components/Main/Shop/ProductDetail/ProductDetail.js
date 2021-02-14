@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -9,9 +10,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import back from "../../../../media/backList.png";
-import cart from "../../../../media/watch.png";
+import cart from "../../../../media/cart.png";
+import cate1 from "../../../../media/cate1.jpg";
+import cate1n1 from "../../../../media/cate1n1.jpg";
 
 export function ProductDetail() {
+  const navigation = useNavigation();
   const {
     wrapper,
     cardStyle,
@@ -33,59 +37,70 @@ export function ProductDetail() {
   } = styles;
   return (
     <View style={wrapper}>
-      <View style={cardStyle}>
-        <View style={header}>
-          <TouchableOpacity>
-            <Image style={backStyle} source={back} />
-          </TouchableOpacity>
-          <TouchableOpacity >
-            <Image style={cartStyle} source={cart} />
-          </TouchableOpacity>
-        </View>
-        <View style={imageContainer}>
-          <ScrollView
-            style={{ flexDirection: "row", padding: 10, height: swiperHeight }}
-            horizontal
-          >
-            <Image source={cart} style={productImageStyle} />
-            <Image source={cart} style={productImageStyle} />
-          </ScrollView>
-        </View>
-        <View style={footer}>
-          <View style={titleContainer}>
-            <Text style={textMain}>
-              <Text style={textBlack}>Noi dung 1</Text>
-              <Text style={textHighlight}> / </Text>
-              <Text style={textSmoke}>80000</Text>
-            </Text>
+      <ScrollView style={wrapper}>
+        <View style={cardStyle}>
+          <View style={header}>
+            <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
+              <Image style={backStyle} source={back} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={cartStyle} source={cart} />
+            </TouchableOpacity>
           </View>
-          <View style={descContainer}>
-            <Text style={descStyle}>Mo ta</Text>
-            <View
+          <View style={imageContainer}>
+            <ScrollView
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
-                paddingTop: 15,
+                padding: 10,
+                height: swiperHeight,
               }}
+              horizontal
             >
-              <Text style={txtMaterial}>Material </Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={txtColor}>Color</Text>
-                <View
-                  style={{
-                    height: 15,
-                    width: 15,
-                    borderRadius: 15,
-                    marginLeft: 10,
-                    borderWidth: 1,
-                    borderColor: "#C21C70",
-                  }}
-                />
+              <Image source={cate1} style={productImageStyle} />
+              <Image source={cate1n1} style={productImageStyle} />
+            </ScrollView>
+          </View>
+          <View style={footer}>
+            <View style={titleContainer}>
+              <Text style={textMain}>
+                <Text style={textBlack}>Apple Watch S6 LTE</Text>
+                <Text style={textHighlight}> / </Text>
+                <Text style={textSmoke}>5.000.000 VNĐ</Text>
+              </Text>
+            </View>
+            <View style={descContainer}>
+              <Text style={descStyle}>
+                Apple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu màn hình
+                1.57 inch. Dây đeo được làm từ chất liệu cao su dẻo dai. Mặt
+                kính cường lực Ion-X strengthened glass. Các đường nét được
+                thiết kế tinh xảo làm nên sự đẳng cấp của Apple Watch.
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingTop: 15,
+                }}
+              >
+                <Text style={txtMaterial}>Material </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={txtColor}>Color</Text>
+                  <View
+                    style={{
+                      height: 15,
+                      width: 15,
+                      borderRadius: 15,
+                      marginLeft: 10,
+                      borderWidth: 1,
+                      borderColor: "#C21C70",
+                    }}
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
