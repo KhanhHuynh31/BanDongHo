@@ -1,9 +1,18 @@
 import React from "react";
-import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import product1 from "../../../../media/cate1.jpg";
 
 const { width } = Dimensions.get("window");
 export function TopProduct() {
+  const navigation = useNavigation();
   const {
     container,
     titleContainer,
@@ -19,24 +28,40 @@ export function TopProduct() {
       </View>
       <View style={body}>
         <View style={productContainer}>
-          <Image source={product1} style={productImage} />
-          <Text>PRODUCT NAME 1</Text>
-          <Text>PRODUCT PRICE 1</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+          >
+            <Image source={product1} style={productImage} />
+            <Text>PRODUCT NAME 1</Text>
+            <Text>PRODUCT PRICE 1</Text>
+          </TouchableOpacity>
         </View>
         <View style={productContainer}>
-          <Image source={product1} style={productImage} />
-          <Text>PRODUCT NAME 2</Text>
-          <Text>PRODUCT PRICE 2</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+          >
+            <Image source={product1} style={productImage} />
+            <Text>PRODUCT NAME 2</Text>
+            <Text>PRODUCT PRICE 2</Text>
+          </TouchableOpacity>
         </View>
         <View style={productContainer}>
-          <Image source={product1} style={productImage} />
-          <Text>PRODUCT NAME 3</Text>
-          <Text>PRODUCT PRICE 3</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+          >
+            <Image source={product1} style={productImage} />
+            <Text>PRODUCT NAME 3</Text>
+            <Text>PRODUCT PRICE 3</Text>
+          </TouchableOpacity>
         </View>
         <View style={productContainer}>
-          <Image source={product1} style={productImage} />
-          <Text>PRODUCT NAME 4</Text>
-          <Text>PRODUCT PRICE 4</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+          >
+            <Image source={product1} style={productImage} />
+            <Text>PRODUCT NAME 4</Text>
+            <Text>PRODUCT PRICE 4</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

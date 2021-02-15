@@ -20,7 +20,7 @@ export function Collection() {
       </View>
       <TouchableOpacity
         style={{ flex: 4, justifyContent: "flex-end" }}
-        onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+        onPress={() => navigation.navigate("LIST_PRODUCT")}
       >
         <Image
           source={require("../../../../media/bannerWatch.jpg")}
