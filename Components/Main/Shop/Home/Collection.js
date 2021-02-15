@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import bannerWatch from "../../../../media/bannerWatch.jpg";
 
 const { width } = Dimensions.get("window");
 export function Collection() {
@@ -23,7 +24,7 @@ export function Collection() {
         onPress={() => navigation.navigate("LIST_PRODUCT")}
       >
         <Image
-          source={require("../../../../media/bannerWatch.jpg")}
+          source={bannerWatch}
           style={imageStyle}
         />
       </TouchableOpacity>
