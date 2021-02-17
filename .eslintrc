@@ -1,5 +1,8 @@
 {
-  "extends": "rallycoding",
+    "extends": "rallycoding",
+    "globals": {
+      "fetch": false
+    },
   "rules": {
     "import/no-unresolved": 0,
     "quotes": [2, "double" ],

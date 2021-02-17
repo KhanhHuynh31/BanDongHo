@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "react-native";
@@ -7,9 +7,9 @@ import { ChangeInfo } from "./Components/ChangeInfo/ChangeInfo";
 import { Main } from "./Components/Main/Main";
 import { OrderHistory } from "./Components/OrderHistory/OrderHistory";
 
-StatusBar.setHidden(true);
-const Stack = createStackNavigator();
 export default function App() {
+  StatusBar.setHidden(true);
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="MAIN">

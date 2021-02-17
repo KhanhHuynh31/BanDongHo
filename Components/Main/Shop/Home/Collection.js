@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -14,10 +14,22 @@ const { width } = Dimensions.get("window");
 export function Collection() {
   const navigation = useNavigation();
   const { wrapper, textStyle, imageStyle } = styles;
+  const [data, setData] = useState([]);
+  console.log(data);
+
+  useEffect(() => {
+    fetch(
+      "https://raw.githubusercontent.com/adhithiravi/React-Hooks-Examples/master/testAPI.json"
+    )
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <View style={wrapper}>
       <View style={{ height: 50, justifyContent: "center" }}>
-        <Text style={textStyle}>SPRING COLLECTION</Text>
+        <Text style={textStyle}>{data.title}</Text>
       </View>
       <TouchableOpacity
         style={{ flex: 4, justifyContent: "flex-end" }}
