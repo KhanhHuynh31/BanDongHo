@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 import {
   View,
   StyleSheet,
@@ -11,8 +10,8 @@ import {
 import cate1 from "../../../../media/cate1.jpg";
 import back from "../../../../media/backList.png";
 
-export function ListProduct() {
-  const navigation = useNavigation();
+export function ListProduct({ route, navigation }) {
+  const { itemId } = route.params;
   const {
     container,
     header,
@@ -36,7 +35,7 @@ export function ListProduct() {
           <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
             <Image source={back} style={backStyle} />
           </TouchableOpacity>
-          <Text style={titleStyle}>SMART WATCH</Text>
+          <Text style={titleStyle}>SMART WATCH | itemId: {JSON.stringify(itemId)}</Text>
           <View style={{ width: 30 }} />
         </View>
 

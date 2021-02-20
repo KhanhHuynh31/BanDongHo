@@ -9,14 +9,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Swiper from "react-native-swiper/src";
-import cate1 from "../../../../media/cate1.jpg";
-import cate2 from "../../../../media/cate2.jpg";
-import cate3 from "../../../../media/cate3.jpg";
 
 const { width } = Dimensions.get("window");
+const url = "http://192.168.1.15/api/images/product/";
+
 export function Category() {
   const navigation = useNavigation();
-  const { wrapper, textStyle, imageStyle } = styles;
+  const { wrapper, textStyle } = styles;
   return (
     <View style={wrapper}>
       <View style={{ justifyContent: "center", height: 50 }}>
@@ -24,14 +23,47 @@ export function Category() {
       </View>
       <View style={{ justifyContent: "flex-end", flex: 4 }}>
         <Swiper showsPagination width={imageWidth} height={imageHeight}>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate1} style={imageStyle} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: 1,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: `${url}54.jpg`,
+              }}
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate2} style={imageStyle} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: 2,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: `${url}55.jpg`,
+              }}
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate3} style={imageStyle} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: 3,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: `${url}56.jpg`,
+              }}
+            />
           </TouchableOpacity>
         </Swiper>
       </View>
@@ -60,5 +92,9 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: imageHeight,
     width: imageWidth,
+  },
+  cateTitle: {
+    fontSize: 20,
+    color: "#9A9A9A",
   },
 });
