@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,12 +7,22 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
-import product1 from "../../../../media/cate1.jpg";
 
 const { width } = Dimensions.get("window");
+const url = "http://192.168.1.15/api/index.php";
+const urli = "http://192.168.1.15/api/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   const {
     container,
     titleContainer,
@@ -26,44 +36,21 @@ export function TopProduct() {
       <View style={titleContainer}>
         <Text style={title}>TOP PRODUCT</Text>
       </View>
-      <View style={body}>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 1</Text>
-            <Text>PRODUCT PRICE 1</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 2</Text>
-            <Text>PRODUCT PRICE 2</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 3</Text>
-            <Text>PRODUCT PRICE 3</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 4</Text>
-            <Text>PRODUCT PRICE 4</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <FlatList
+          contentContainerStyle={body}
+          data={data.product}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+            style={{ productContainer }}
+              onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+            >
+              <Image source={{ uri: `${urli}${item.id}.jpg` }} style={productImage} />
+              <Text>{item.name}</Text>
+              <Text>Giá: {item.price} 000 VNĐ</Text>
+            </TouchableOpacity>
+          )}
+        />
+
     </View>
   );
 }
