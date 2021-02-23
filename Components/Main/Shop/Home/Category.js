@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,14 +9,12 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
   SafeAreaView,
 } from "react-native";
 
-
 const { width } = Dimensions.get("window");
-const url = "http://192.168.43.15/csdl/index.php";
-const urli = "http://192.168.43.15/csdl/images/type/";
+const url = "http://192.168.1.11/csdl/index.php";
+const urli = "http://192.168.1.11/csdl/images/type/";
 export function Category() {
   const navigation = useNavigation();
   const { wrapper, textStyle } = styles;
@@ -31,25 +31,29 @@ export function Category() {
       <View style={{ justifyContent: "center", height: 50 }}>
         <Text style={textStyle}>LIST OF CATEGORY</Text>
       </View>
-        <FlatList
-          contentContainerStyle={{ margin: 4 }}
-          data={data.type}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("LIST_PRODUCT", {
-                  itemId: item.id,
-                });
-              }}
-            >
-              <Image
-                style={styles.imageStyle}
-                source={{ uri: `${urli}${item.id}.jpg` }}
-              />
-              <Text>1</Text>
-            </TouchableOpacity>
-          )}
-        />
+      <SwiperFlatList
+        autoplay
+        autoplayDelay={10}
+        autoplayLoop
+        index={2}
+        showPagination
+        data={data.type}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: item.id,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{ uri: `${urli}${item.id}.jpg` }}
+            />
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </SafeAreaView>
   );
 }
@@ -57,6 +61,9 @@ const imageWidth = width - 40;
 const imageHeight = (imageWidth / 933) * 465;
 
 const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "white" },
+  child: { width, justifyContent: "center" },
+  text: { fontSize: width * 0.5, textAlign: "center" },
   wrapper: {
     width: width - 20,
     backgroundColor: "#FFF",

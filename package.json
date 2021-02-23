@@ -32,8 +32,10 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-swiper": "^1.6.0",
+    "react-native-swiper-flatlist": "^3.0.14",
     "react-native-vector-icons": "^8.0.0",
     "react-native-web": "~0.13.12",
+    "react-native-web-swiper": "^2.2.1",
     "react-navigation": "^4.4.3",
     "swiper": "^6.4.11"
   },

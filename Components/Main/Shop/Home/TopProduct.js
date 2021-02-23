@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.43.15/csdl/index.php";
-const urli = "http://192.168.43.15/csdl/images/product/";
+const url = "http://192.168.1.11/csdl/index.php";
+const urli = "http://192.168.1.11/csdl/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
