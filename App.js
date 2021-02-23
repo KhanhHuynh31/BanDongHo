@@ -10,7 +10,7 @@ export default function App() {
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MAIN">
+      <Stack.Navigator initialRouteName="AUTHENTICATION">
         <Stack.Screen
           name="MAIN"
           component={Main}

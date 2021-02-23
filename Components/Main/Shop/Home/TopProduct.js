@@ -8,11 +8,12 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.1.15/api/index.php";
-const urli = "http://192.168.1.15/api/images/product/";
+const url = "http://192.168.43.15/csdl/index.php";
+const urli = "http://192.168.43.15/csdl/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
@@ -27,31 +28,39 @@ export function TopProduct() {
     container,
     titleContainer,
     title,
-    body,
     productContainer,
     productImage,
   } = styles;
   return (
-    <View style={container}>
+    <SafeAreaView style={container}>
       <View style={titleContainer}>
         <Text style={title}>TOP PRODUCT</Text>
       </View>
-        <FlatList
-          contentContainerStyle={body}
-          data={data.product}
-          renderItem={({ item }) => (
+      <FlatList
+        contentContainerStyle={{ margin: 4 }}
+        numColumns={2}
+        data={data.product}
+        renderItem={({ item }) => (
+          <View style={{ flex: 1 }}>
             <TouchableOpacity
-            style={{ productContainer }}
-              onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+              style={{ productContainer }}
+              onPress={() =>
+                navigation.navigate("PRODUCT_DETAIL", {
+                  itemId: item.id,
+                })
+              }
             >
-              <Image source={{ uri: `${urli}${item.id}.jpg` }} style={productImage} />
+              <Image
+                source={{ uri: `${urli}${item.id}.jpg` }}
+                style={productImage}
+              />
               <Text>{item.name}</Text>
               <Text>Giá: {item.price} 000 VNĐ</Text>
             </TouchableOpacity>
-          )}
-        />
-
-    </View>
+          </View>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 const productWidth = (width - 60) / 2;
@@ -73,12 +82,6 @@ const styles = StyleSheet.create({
   title: {
     color: "#D3D3CF",
     fontSize: 20,
-  },
-  body: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    flexWrap: "wrap",
-    paddingBottom: 10,
   },
   productContainer: {
     width: productWidth,

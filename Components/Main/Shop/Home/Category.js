@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,67 +7,50 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  FlatList,
+  SafeAreaView,
 } from "react-native";
-import Swiper from "react-native-swiper/src";
+
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.1.15/api/images/product/";
-
+const url = "http://192.168.43.15/csdl/index.php";
+const urli = "http://192.168.43.15/csdl/images/type/";
 export function Category() {
   const navigation = useNavigation();
   const { wrapper, textStyle } = styles;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
-    <View style={wrapper}>
+    <SafeAreaView style={wrapper}>
       <View style={{ justifyContent: "center", height: 50 }}>
         <Text style={textStyle}>LIST OF CATEGORY</Text>
       </View>
-      <View style={{ justifyContent: "flex-end", flex: 4 }}>
-        <Swiper showsPagination width={imageWidth} height={imageHeight}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("LIST_PRODUCT", {
-                itemId: 1,
-              });
-            }}
-          >
-            <Image
-              style={styles.imageStyle}
-              source={{
-                uri: `${url}54.jpg`,
+        <FlatList
+          contentContainerStyle={{ margin: 4 }}
+          data={data.type}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("LIST_PRODUCT", {
+                  itemId: item.id,
+                });
               }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("LIST_PRODUCT", {
-                itemId: 2,
-              });
-            }}
-          >
-            <Image
-              style={styles.imageStyle}
-              source={{
-                uri: `${url}55.jpg`,
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("LIST_PRODUCT", {
-                itemId: 3,
-              });
-            }}
-          >
-            <Image
-              style={styles.imageStyle}
-              source={{
-                uri: `${url}56.jpg`,
-              }}
-            />
-          </TouchableOpacity>
-        </Swiper>
-      </View>
-    </View>
+            >
+              <Image
+                style={styles.imageStyle}
+                source={{ uri: `${urli}${item.id}.jpg` }}
+              />
+              <Text>1</Text>
+            </TouchableOpacity>
+          )}
+        />
+    </SafeAreaView>
   );
 }
 const imageWidth = width - 40;

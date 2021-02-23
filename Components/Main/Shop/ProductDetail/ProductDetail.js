@@ -14,8 +14,9 @@ import cart from "../../../../media/cart.png";
 import cate1 from "../../../../media/cate1.jpg";
 import cate1n1 from "../../../../media/cate1n1.jpg";
 
-export function ProductDetail() {
+export function ProductDetail({ route }) {
   const navigation = useNavigation();
+  const { itemId } = route.params;
   const {
     wrapper,
     cardStyle,
@@ -63,7 +64,7 @@ export function ProductDetail() {
           <View style={footer}>
             <View style={titleContainer}>
               <Text style={textMain}>
-                <Text style={textBlack}>Apple Watch S6 LTE</Text>
+                <Text style={textBlack}>Apple Watch S6 LTE | itemId: {JSON.stringify(itemId)}</Text>
                 <Text style={textHighlight}> / </Text>
                 <Text style={textSmoke}>5.000.000 VNĐ</Text>
               </Text>
