@@ -4,52 +4,53 @@ import icBack from "../../../../media/backList.png";
 import icLogo from "../../../../media/cate1.jpg";
 
 export function Authentication() {
-      const { row1, iconStyle, titleStyle, container, controlStyle, 
-        signInStyle, signUpStyle, inactiveStyle, activeStyle, bigButton, buttonText,
-        inputStyle } = styles;
-        const signInJSX = (
-          <View>
-              <TextInput style={inputStyle} placeholder="Enter your email " />
-              <TextInput style={inputStyle} placeholder="Enter your password " />
-              <TouchableOpacity style={bigButton}>
-                <Text style={buttonText}>SIGN IN NOW</Text>
-              </TouchableOpacity>
-            </View>
-        );
-        const singUpJSX = (
-          <View>
-              <TextInput style={inputStyle} placeholder="Enter your name " />
-              <TextInput style={inputStyle} placeholder="Enter your email " />
-              <TextInput style={inputStyle} placeholder="Enter your password " />
-              <TextInput style={inputStyle} placeholder="Re- enter your password " />
-              <TouchableOpacity style={bigButton}>
-                <Text style={buttonText}>SIGN UP NOW</Text>
-              </TouchableOpacity>
-            </View>
-        );
-        const { isSignIn } = this.state;
-        const mainJSX = isSignIn ? signInJSX : singUpJSX;
-        return (
-          <View style={container}>
-            <View style={row1}>
-              <TouchableOpacity onPress={this.goToBackMain.bind(this)}>
-                <Image source={icBack} style={iconStyle} />
-              </TouchableOpacity>
-              <Text style={titleStyle}> Wearing a Dress</Text>
-              <Image source={icLogo} style={iconStyle} />
-            </View>
-            {mainJSX}
-            <View style={controlStyle}>
-              <TouchableOpacity style={signInStyle} onPress={this.signIn.bind(this)}>
-                <Text style={isSignIn ? activeStyle : inactiveStyle}>SIGN IN</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={signUpStyle} onPress={this.signUp.bind(this)}>
-                <Text style={!isSignIn ? activeStyle : inactiveStyle}>SIGN UP</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
-      }
+  const { row1, iconStyle, titleStyle, container, controlStyle, 
+    signInStyle, signUpStyle, inactiveStyle, activeStyle, bigButton, buttonText,
+    inputStyle } = styles;
+    const signInJSX = (
+      <View>
+          <TextInput style={inputStyle} placeholder="Enter your email " />
+          <TextInput style={inputStyle} placeholder="Enter your password " />
+          <TouchableOpacity style={bigButton}>
+            <Text style={buttonText}>SIGN IN NOW</Text>
+          </TouchableOpacity>
+        </View>
+    );
+    const singUpJSX = (
+      <View>
+          <TextInput style={inputStyle} placeholder="Enter your name " />
+          <TextInput style={inputStyle} placeholder="Enter your email " />
+          <TextInput style={inputStyle} placeholder="Enter your password " />
+          <TextInput style={inputStyle} placeholder="Re- enter your password " />
+          <TouchableOpacity style={bigButton}>
+            <Text style={buttonText}>SIGN UP NOW</Text>
+          </TouchableOpacity>
+        </View>
+    );
+    const { isSignIn } = this.state;
+    const mainJSX = isSignIn ? signInJSX : singUpJSX;
+    return (
+      <View style={container}>
+        <View style={row1}>
+          <TouchableOpacity onPress={this.goToBackMain.bind(this)}>
+            <Image source={icBack} style={iconStyle} />
+          </TouchableOpacity>
+          <Text style={titleStyle}> Wearing a Dress</Text>
+          <Image source={icLogo} style={iconStyle} />
+        </View>
+        {mainJSX}
+        <View style={controlStyle}>
+          <TouchableOpacity style={signInStyle} onPress={this.signIn.bind(this)}>
+            <Text style={isSignIn ? activeStyle : inactiveStyle}>SIGN IN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={signUpStyle} onPress={this.signUp.bind(this)}>
+            <Text style={!isSignIn ? activeStyle : inactiveStyle}>SIGN UP</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+      
   
   const styles = StyleSheet.create({
       container: {
