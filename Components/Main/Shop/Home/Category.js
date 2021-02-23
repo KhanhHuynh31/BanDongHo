@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Swiper from "react-native-swiper/src";
+
 import cate1 from "../../../../media/cate1.jpg";
 import cate2 from "../../../../media/cate2.jpg";
 import cate3 from "../../../../media/cate3.jpg";
@@ -23,7 +23,6 @@ export function Category() {
         <Text style={textStyle}>LIST OF CATEGORY</Text>
       </View>
       <View style={{ justifyContent: "flex-end", flex: 4 }}>
-        <Swiper showsPagination width={imageWidth} height={imageHeight}>
           <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
             <Image source={cate1} style={imageStyle} />
           </TouchableOpacity>
@@ -33,7 +32,6 @@ export function Category() {
           <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
             <Image source={cate3} style={imageStyle} />
           </TouchableOpacity>
-        </Swiper>
       </View>
     </View>
   );
