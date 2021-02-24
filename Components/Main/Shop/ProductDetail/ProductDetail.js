@@ -11,12 +11,15 @@ import {
 } from "react-native";
 import back from "../../../../media/backList.png";
 import cart from "../../../../media/cart.png";
-import cate1 from "../../../../media/cate1.jpg";
-import cate1n1 from "../../../../media/cate1n1.jpg";
 
 export function ProductDetail({ route }) {
   const navigation = useNavigation();
   const { itemId } = route.params;
+  const { itemName } = route.params;
+  const { itemPrice } = route.params;
+  const { itemColor } = route.params;
+  const { itemMaterial } = route.params;
+  const { itemDescription } = route.params;
   const {
     wrapper,
     cardStyle,
@@ -27,7 +30,6 @@ export function ProductDetail({ route }) {
     cartStyle,
     textBlack,
     textSmoke,
-    textHighlight,
     textMain,
     titleContainer,
     descContainer,
@@ -36,6 +38,7 @@ export function ProductDetail({ route }) {
     txtMaterial,
     txtColor,
   } = styles;
+  const urli = "http://192.168.1.17/csdl/images/product/";
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>
@@ -57,25 +60,27 @@ export function ProductDetail({ route }) {
               }}
               horizontal
             >
-              <Image source={cate1} style={productImageStyle} />
-              <Image source={cate1n1} style={productImageStyle} />
+              <Image
+                source={{ uri: `${urli}${itemId}.jpg` }}
+                style={productImageStyle}
+              />
+              <Image
+                source={{ uri: `${urli}${itemId}_1.jpg` }}
+                style={productImageStyle}
+              />
             </ScrollView>
           </View>
           <View style={footer}>
             <View style={titleContainer}>
               <Text style={textMain}>
-                <Text style={textBlack}>Apple Watch S6 LTE | itemId: {JSON.stringify(itemId)}</Text>
-                <Text style={textHighlight}> / </Text>
-                <Text style={textSmoke}>5.000.000 VNĐ</Text>
+                <Text style={textBlack}>{JSON.stringify(itemName)}</Text>
+                <Text style={textSmoke}>
+                  {"\n"} Price: {JSON.stringify(itemPrice)} USD
+                </Text>
               </Text>
             </View>
             <View style={descContainer}>
-              <Text style={descStyle}>
-                Apple Watch S6 LTE 40mm viền nhôm dây cao su sở hữu màn hình
-                1.57 inch. Dây đeo được làm từ chất liệu cao su dẻo dai. Mặt
-                kính cường lực Ion-X strengthened glass. Các đường nét được
-                thiết kế tinh xảo làm nên sự đẳng cấp của Apple Watch.
-              </Text>
+              <Text style={descStyle}>{JSON.stringify(itemDescription)}</Text>
               <View
                 style={{
                   flexDirection: "row",
@@ -83,19 +88,13 @@ export function ProductDetail({ route }) {
                   paddingTop: 15,
                 }}
               >
-                <Text style={txtMaterial}>Material </Text>
+                <Text style={txtMaterial}>
+                  Material: {JSON.stringify(itemMaterial)}{" "}
+                </Text>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={txtColor}>Color</Text>
-                  <View
-                    style={{
-                      height: 15,
-                      width: 15,
-                      borderRadius: 15,
-                      marginLeft: 10,
-                      borderWidth: 1,
-                      borderColor: "#C21C70",
-                    }}
-                  />
+                  <Text style={txtColor}>
+                    Color: {JSON.stringify(itemColor)}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -161,10 +160,6 @@ const styles = StyleSheet.create({
   textSmoke: {
     fontSize: 20,
     color: "#9A9A9A",
-  },
-  textHighlight: {
-    fontSize: 20,
-    color: "#7D59C8",
   },
   titleContainer: {
     borderBottomWidth: 1,

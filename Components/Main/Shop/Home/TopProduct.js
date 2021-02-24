@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.1.11/csdl/index.php";
-const urli = "http://192.168.1.11/csdl/images/product/";
+const url = "http://192.168.1.17/csdl/index.php";
+const urli = "http://192.168.1.17/csdl/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
@@ -34,12 +34,13 @@ export function TopProduct() {
   return (
     <SafeAreaView style={container}>
       <View style={titleContainer}>
-        <Text style={title}>TOP PRODUCT</Text>
+        <Text style={title}>PRODUCT</Text>
       </View>
       <FlatList
         contentContainerStyle={{ margin: 4 }}
         numColumns={2}
         data={data.product}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={{ flex: 1 }}>
             <TouchableOpacity
@@ -47,6 +48,11 @@ export function TopProduct() {
               onPress={() =>
                 navigation.navigate("PRODUCT_DETAIL", {
                   itemId: item.id,
+                  itemName: item.name,
+                  itemPrice: item.price,
+                  itemColor: item.color,
+                  itemMaterial: item.material,
+                  itemDescription: item.description,
                 })
               }
             >
@@ -55,7 +61,7 @@ export function TopProduct() {
                 style={productImage}
               />
               <Text>{item.name}</Text>
-              <Text>Giá: {item.price} 000 VNĐ</Text>
+              <Text>Price: {item.price} 000 USD</Text>
             </TouchableOpacity>
           </View>
         )}
