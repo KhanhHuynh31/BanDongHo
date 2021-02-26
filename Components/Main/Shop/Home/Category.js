@@ -13,8 +13,8 @@ import {
 } from "react-native";
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.1.17/csdl/index.php";
-const urli = "http://192.168.1.17/csdl/images/type/";
+const url = "http://192.168.1.15/csdl/index.php";
+const urli = "http://192.168.1.15/csdl/images/type/";
 export function Category() {
   const navigation = useNavigation();
   const { wrapper, textStyle } = styles;
@@ -42,6 +42,7 @@ export function Category() {
             onPress={() => {
               navigation.navigate("LIST_PRODUCT", {
                 itemId: item.id,
+                itemName: item.name,
               });
             }}
           >

@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 const { width } = Dimensions.get("window");
-const url = "http://192.168.1.17/csdl/index.php";
-const urli = "http://192.168.1.17/csdl/images/product/";
+const url = "http://192.168.1.15/csdl/index.php";
+const urli = "http://192.168.1.15/csdl/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
@@ -61,7 +61,7 @@ export function TopProduct() {
                 style={productImage}
               />
               <Text>{item.name}</Text>
-              <Text>Price: {item.price} 000 USD</Text>
+              <Text>Price: {item.price} USD</Text>
             </TouchableOpacity>
           </View>
         )}

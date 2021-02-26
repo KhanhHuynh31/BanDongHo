@@ -38,7 +38,7 @@ export function ProductDetail({ route }) {
     txtMaterial,
     txtColor,
   } = styles;
-  const urli = "http://192.168.1.17/csdl/images/product/";
+  const urli = "http://192.168.1.15/csdl/images/product/";
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>

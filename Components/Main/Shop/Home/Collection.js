@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import bannerWatch from "../../../../media/bannerWatch.jpg";
 
@@ -15,21 +16,21 @@ export function Collection() {
   const navigation = useNavigation();
   const { wrapper, textStyle, imageStyle } = styles;
   return (
-    <View style={wrapper}>
+    <SafeAreaView style={wrapper}>
       <View style={{ height: 50, justifyContent: "center" }}>
         <Text style={textStyle}>COLLECTION</Text>
       </View>
       <TouchableOpacity
         style={{ flex: 4, justifyContent: "flex-end" }}
         onPress={() => {
-              navigation.navigate("LIST_PRODUCT", {
-                itemId: 4,
-              });
-            }}
+          navigation.navigate("LIST_PRODUCT", {
+            itemId: 4,
+          });
+        }}
       >
         <Image source={bannerWatch} style={imageStyle} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 const imageWidth = width - 40;

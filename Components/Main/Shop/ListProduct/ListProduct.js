@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Image,
   Text,
+  FlatList,
+  SafeAreaView,
 } from "react-native";
-import cate1 from "../../../../media/cate1.jpg";
 import back from "../../../../media/backList.png";
 
 export function ListProduct({ route, navigation }) {
   const { itemId } = route.params;
+  const { itemName } = route.params;
   const {
     container,
     header,
@@ -28,93 +29,71 @@ export function ListProduct({ route, navigation }) {
     txtColor,
     txtShowDetail,
   } = styles;
+  const url = `http://192.168.1.15/csdl/product_type.php?id_type=${itemId}`;
+  const urli = "http://192.168.1.15/csdl/images/product/";
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
   return (
-    <View style={container}>
-      <ScrollView style={wrapper}>
+    <SafeAreaView style={container}>
+      <View style={wrapper}>
         <View style={header}>
           <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
             <Image source={back} style={backStyle} />
           </TouchableOpacity>
-          <Text style={titleStyle}>SMART WATCH | itemId: {JSON.stringify(itemId)}</Text>
-          <View style={{ width: 30 }} />
+          <Text style={titleStyle}>
+            {JSON.stringify(itemName)} | {JSON.stringify(itemId)}
+          </Text>
         </View>
-
-        <View style={productContainer}>
-          <Image source={cate1} style={productImage} />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
+        <FlatList
+          contentContainerStyle={{ margin: 4 }}
+          data={data}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={productContainer}>
+              <Image
+                source={{ uri: `${urli}${item.id}.jpg` }}
+                style={productImage}
               />
-              <TouchableOpacity
-                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-              >
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
+              <View style={productInfo}>
+                <Text style={txtName}>{item.name}</Text>
+                <Text style={txtPrice}>{item.price} USD</Text>
+                <Text style={txtMaterial}>{item.material}</Text>
+                <View style={lastRowInfo}>
+                  <Text style={txtColor}>{item.color}</Text>
+                  <View
+                    style={{
+                      backgroundColor: "cyan",
+                      height: 16,
+                      width: 16,
+                      borderRadius: 8,
+                    }}
+                  />
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("PRODUCT_DETAIL", {
+                        itemId: item.id,
+                        itemName: item.name,
+                        itemPrice: item.price,
+                        itemColor: item.color,
+                        itemMaterial: item.material,
+                        itemDescription: item.description,
+                      })
+                    }
+                  >
+                    <Text style={txtShowDetail}>SHOW DETAIL</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-
-        <View style={productContainer}>
-          <Image source={cate1} style={productImage} />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-              />
-              <TouchableOpacity
-                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-              >
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={productContainer}>
-          <Image source={cate1} style={productImage} />
-          <View style={productInfo}>
-            <Text style={txtName}>Lace Sleeve Si</Text>
-            <Text style={txtPrice}>117$</Text>
-            <Text style={txtMaterial}>Material silk</Text>
-            <View style={lastRowInfo}>
-              <Text style={txtColor}>Color Red</Text>
-              <View
-                style={{
-                  backgroundColor: "cyan",
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-              />
-              <TouchableOpacity
-                onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-              >
-                <Text style={txtShowDetail}>SHOW DETAIL</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </View>
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
