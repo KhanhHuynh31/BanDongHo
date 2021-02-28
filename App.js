@@ -12,10 +12,10 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MAIN">
+      <Stack.Navigator initialRouteName="Authentication">
         <Stack.Screen
-          name="MAIN"
-          component={Main}
+          name="Authentication"
+          component={Authentication}
           options={{
             headerShown: false,
           }}
