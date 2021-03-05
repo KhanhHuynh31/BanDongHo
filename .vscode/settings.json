@@ -3,4 +3,5 @@
         "Ionicons",
         "rallycoding"
     ]
+    "eslint.enable": false
 }
