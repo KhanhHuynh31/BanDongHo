@@ -29,8 +29,8 @@ export function ListProduct({ route, navigation }) {
     txtColor,
     txtShowDetail,
   } = styles;
-  const url = `http://192.168.1.15/csdl/product_type.php?id_type=${itemId}`;
-  const urli = "http://192.168.1.15/csdl/images/product/";
+  const url = `http://192.168.26.1/csdl/product_type.php?id_type=${itemId}`;
+  const urli = "http://192.168.26.1/csdl/images/product/";
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch(url)
@@ -46,7 +46,7 @@ export function ListProduct({ route, navigation }) {
             <Image source={back} style={backStyle} />
           </TouchableOpacity>
           <Text style={titleStyle}>
-            {JSON.stringify(itemName)} | {JSON.stringify(itemId)}
+            {JSON.stringify(itemName)}
           </Text>
         </View>
         <FlatList

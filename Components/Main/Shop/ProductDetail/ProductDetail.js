@@ -38,7 +38,16 @@ export function ProductDetail({ route }) {
     txtMaterial,
     txtColor,
   } = styles;
-  const urli = "http://192.168.1.15/csdl/images/product/";
+  const urli = "http://192.168.26.1/csdl/images/product/";
+  const register = (email, name, password) =>
+    fetch("http://192.168.26.1/csdl/register.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, name, password }),
+    }).then((res) => res.text());
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>
@@ -47,7 +56,9 @@ export function ProductDetail({ route }) {
             <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
               <Image style={backStyle} source={back} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => register("test1@123", "123", "test")}
+            >
               <Image style={cartStyle} source={cart} />
             </TouchableOpacity>
           </View>
@@ -105,7 +116,7 @@ export function ProductDetail({ route }) {
   );
 }
 const { width } = Dimensions.get("window");
-const swiperWidth = (width / 1.8) - 30;
+const swiperWidth = width / 1.8 - 30;
 const swiperHeight = (swiperWidth * 452) / 361;
 
 const styles = StyleSheet.create({
