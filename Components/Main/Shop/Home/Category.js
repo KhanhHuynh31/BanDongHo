@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,41 +9,62 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
-import Swiper from "react-native-swiper/src";
-import cate1 from "../../../../media/cate1.jpg";
-import cate2 from "../../../../media/cate2.jpg";
-import cate3 from "../../../../media/cate3.jpg";
+
 
 const { width } = Dimensions.get("window");
+const url = "http://192.168.26.1/csdl/index.php";
+const urli = "http://192.168.26.1/csdl/images/type/";
 export function Category() {
   const navigation = useNavigation();
-  const { wrapper, textStyle, imageStyle } = styles;
+  const { wrapper, textStyle } = styles;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
-    <View style={wrapper}>
+    <SafeAreaView style={wrapper}>
       <View style={{ justifyContent: "center", height: 50 }}>
         <Text style={textStyle}>LIST OF CATEGORY</Text>
       </View>
-      <View style={{ justifyContent: "flex-end", flex: 4 }}>
-        <Swiper showsPagination width={imageWidth} height={imageHeight}>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate1} style={imageStyle} />
+      <SwiperFlatList
+        autoplay
+        autoplayDelay={10}
+        autoplayLoop
+        showPagination
+        data={data.type}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: item.id,
+                itemName: item.name,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{ uri: `${urli}${item.id}.jpg` }}
+            />
+            <Text>{item.name}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate2} style={imageStyle} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
-            <Image source={cate3} style={imageStyle} />
-          </TouchableOpacity>
-        </Swiper>
-      </View>
-    </View>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 const imageWidth = width - 40;
 const imageHeight = (imageWidth / 933) * 465;
 
 const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "white" },
+  child: { width, justifyContent: "center" },
+  text: { fontSize: width * 0.5, textAlign: "center" },
   wrapper: {
     width: width - 20,
     backgroundColor: "#FFF",
@@ -60,5 +83,9 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: imageHeight,
     width: imageWidth,
+  },
+  cateTitle: {
+    fontSize: 20,
+    color: "#9A9A9A",
   },
 });

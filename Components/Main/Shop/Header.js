@@ -17,7 +17,7 @@ export function Header() {
           name={"menu"}
           onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         />
-        <Text style={titleStyle}>Wearing a Watch</Text>
+        <Text style={titleStyle}>Buy a Watch</Text>
         <Image source={require("../../../media/watch.png")} style={iconStyle} />
       </View>
       <TextInput

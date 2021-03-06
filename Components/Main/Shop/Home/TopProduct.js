@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,64 +7,66 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  FlatList,
+  SafeAreaView,
 } from "react-native";
-import product1 from "../../../../media/cate1.jpg";
 
 const { width } = Dimensions.get("window");
+const url = "http://192.168.26.1/csdl/index.php";
+const urli = "http://192.168.26.1/csdl/images/product/";
 export function TopProduct() {
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   const {
     container,
     titleContainer,
     title,
-    body,
     productContainer,
     productImage,
   } = styles;
   return (
-    <View style={container}>
+    <SafeAreaView style={container}>
       <View style={titleContainer}>
-        <Text style={title}>TOP PRODUCT</Text>
+        <Text style={title}>PRODUCT</Text>
       </View>
-      <View style={body}>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 1</Text>
-            <Text>PRODUCT PRICE 1</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 2</Text>
-            <Text>PRODUCT PRICE 2</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 3</Text>
-            <Text>PRODUCT PRICE 3</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={productContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PRODUCT_DETAIL")}
-          >
-            <Image source={product1} style={productImage} />
-            <Text>PRODUCT NAME 4</Text>
-            <Text>PRODUCT PRICE 4</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      <FlatList
+        contentContainerStyle={{ margin: 4 }}
+        numColumns={2}
+        data={data.product}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity
+              style={{ productContainer }}
+              onPress={() =>
+                navigation.navigate("PRODUCT_DETAIL", {
+                  itemId: item.id,
+                  itemName: item.name,
+                  itemPrice: item.price,
+                  itemColor: item.color,
+                  itemMaterial: item.material,
+                  itemDescription: item.description,
+                })
+              }
+            >
+              <Image
+                source={{ uri: `${urli}${item.id}.jpg` }}
+                style={productImage}
+              />
+              <Text>{item.name}</Text>
+              <Text>Price: {item.price} USD</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 const productWidth = (width - 60) / 2;
@@ -86,12 +88,6 @@ const styles = StyleSheet.create({
   title: {
     color: "#D3D3CF",
     fontSize: 20,
-  },
-  body: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    flexWrap: "wrap",
-    paddingBottom: 10,
   },
   productContainer: {
     width: productWidth,
