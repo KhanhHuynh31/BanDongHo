@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import icBack from "../../media/backList.png";
 import icLogo from "../../media/cate1.jpg";
+import { Alert } from "react-native";
 
 
 const Stack = createStackNavigator();
@@ -30,7 +32,10 @@ const signUp = () => {
           <TextInput style={inputStyle} placeholder="Enter your password " />
           <TextInput style={inputStyle} placeholder="Re-enter your password " />
           <TouchableOpacity style={bigButton}>
-            <Text style={buttonText}>SIGN UP NOW</Text>
+            <Text 
+              style={buttonText} 
+              onPress={this.SignUp}
+            >SIGN UP NOW</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -46,6 +51,8 @@ const signUp = () => {
     </View>
   );
 };
+
+
 const signIn = () => {
   const navigation = useNavigation();
   const { row1, iconStyle, titleStyle, container, controlStyle, signUpStyle,
@@ -62,10 +69,20 @@ const signIn = () => {
       </View>
       <View>
         <View>
-          <TextInput style={inputStyle} placeholder="Enter your email " />
-          <TextInput style={inputStyle} placeholder="Enter your password " />
+          <TextInput 
+            style={inputStyle} 
+            // eslint-disable-next-line no-undef
+            onChangeText={(userEmail) => setUserEmail(userEmail)}
+            // eslint-disable-next-line react/jsx-closing-bracket-location
+            placeholder="Enter your email " />
+          <TextInput 
+          style={inputStyle} 
+          // eslint-disable-next-line no-undef
+          onChangeText={(userPassword) => setUserPassword(userPassword)}
+          placeholder="Enter your password "
+          />
           <TouchableOpacity style={bigButton}>
-            <Text style={buttonText}>SIGN IN NOW</Text>
+            <Text style={buttonText} onPress={this.SignIn} >SIGN IN NOW</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -81,6 +98,27 @@ const signIn = () => {
     </View>
   );
 };
+// eslint-disable-next-line no-undef
+SignIn = () => {
+  // eslint-disable-next-line prefer-const
+  // eslint-disable-next-line no-unused-vars
+  const email = this.props.email;
+  const password = this.props.password;
+  if (email == "" || password =="") {
+    Alert.alert("Ten dang nhap khong duoc rong")
+  } else if (email == "admin" && password == "admin") {
+    Alert.alert("Dang nhap thanh cong");
+  } else {
+    Alert.alert("Sai ten dang nhap");
+  }
+// eslint-disable-next-line semi
+}
+// eslint-disable-next-line no-undef
+SignUP = () => {
+
+};
+
+
 export function Authentication() {
         return (
           <Stack.Navigator initialRouteName="signIn">
