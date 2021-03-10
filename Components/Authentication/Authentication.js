@@ -20,19 +20,17 @@ const Stack = createStackNavigator();
 
 const signUp = () => {
   const navigation = useNavigation();
-  // eslint-disable-next-line no-unused-vars
-  const [name, setName] = useState({ value: "" });
-  // eslint-disable-next-line no-unused-vars
-  const [email, setUserEmail] = useState({ value: "" });
-  const [password, setUserPassword] = useState({ value: "" });
+  const [Name, setName] = useState({ value: "" });
+  const [Email, setUserEmail] = useState({ value: "" });
+  const [Password, setUserPassword] = useState({ value: "" });
   const [ReEnterPassword, setReEnterPassword] = useState({ value: "" });
   const SignUp = () => {
-    const { Name } = this.state.Name;
-    const { Email } = this.state.Email;
-    const { PassWord } = this.state.PassWord;  
-    const { ReEnterPassword } = this.state.ReEnterPassword;
+    const { Name } = useState({ value: "" });
+    const { Email } = useState({ value: "" });
+    const { PassWord } = useState({ value: "" });  
+    const { ReEnterPassword } = useState({ value: "" });
     // eslint-disable-next-line max-len
-    if (Name.length === 0 || Email.length === 0 || PassWord.length === 0 || ReEnterPassword.length === 0) {
+    if (Name === "" || Email === "" || PassWord === "" || ReEnterPassword === "") {
       alert("Please enter Email and PassWord");
     } else {
       const URL = "http://127.0.0.1/authen/SignUp.php";
@@ -90,17 +88,17 @@ const signUp = () => {
         <View>
           <TextInput 
             style={inputStyle} 
-            onChangeText={(name) => setName(Name)}
+            onChangeText={(Name) => setName(Name)}
             placeholder="Enter your name " 
           />
           <TextInput 
             style={inputStyle} 
-            onChangeText={(email) => setUserEmail(email)}
+            onChangeText={(Email) => setUserEmail(Email)}
             placeholder="Enter your email "
           />
           <TextInput 
             style={inputStyle}
-            onChangeText={(password) => setUserPassword(password)} 
+            onChangeText={(PassWord) => setUserPassword(PassWord)} 
             placeholder="Enter your password "
             secureTextEntry
           />
@@ -136,12 +134,12 @@ const signUp = () => {
 
 const signIn = () => {
   const navigation = useNavigation();
-  const [email, setUserEmail] = useState({ value: "" });
-  const [passWord, setUserPassWord] = useState({ value: "" });
+  const [Email, setEmail] = useState({ value: "" });
+  const [PassWord, setPassWord] = useState({ value: "" });
   const SignIn = () => {
-    const { email } = this.state.email;
-    const { passWord } = this.state.passWord;  
-    if (email === null || passWord === null) {
+    const { Email } = useState({ value: "" });
+    const { PassWord } = useState({ value: "" });  
+    if (Email === "" || PassWord === "") {
       alert("Please enter Email and PassWord");
     } else {
       const URL = "http://127.0.0.1/authen/SignIn.php";
@@ -150,8 +148,8 @@ const signIn = () => {
           "Content-Type": "application.jon",
       };
       const Data = {
-        email,
-        passWord,
+        Email,
+        PassWord,
       };
 
       fetch(URL, 
@@ -196,15 +194,13 @@ const signIn = () => {
           <TextInput
             style={inputStyle}
             // eslint-disable-next-line no-undef
-            onChangeText={(userEmail) => setUserEmail(userEmail)}
+            onChangeText={(userEmail) => setEmail(userEmail)}
             placeholder="Enter your email "
-            // eslint-disable-next-line react/jsx-closing-bracket-location
           />
           <TextInput
             style={inputStyle}
-            // eslint-disable-next-line no-undef
-            placeholder="Enter your password "
-            onChangeText={(userPassWord) => setUserPassword(userPassWord)}
+            placeholder="Enter your password"
+            onChangeText={(userPassWord) => setPassWord(userPassWord)}
             secureTextEntry
           />
           <TouchableOpacity style={bigButton}>
@@ -232,11 +228,6 @@ const signIn = () => {
     </View>
   );
 };
-// eslint-disable-next-line no-undef
-
-// eslint-disable-next-line no-undef
-SignUP = () => {};
-
 export function Authentication() {
   return (
     <Stack.Navigator initialRouteName="signIn">
