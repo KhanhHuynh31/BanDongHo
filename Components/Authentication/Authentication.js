@@ -146,10 +146,6 @@ const signIn = () => {
     </View>
   );
 };
-// eslint-disable-next-line no-undef
-
-// eslint-disable-next-line no-undef
-SignUP = () => {};
 
 export function Authentication() {
   return (
