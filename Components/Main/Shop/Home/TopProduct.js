@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  LogBox,
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -23,7 +24,9 @@ export function TopProduct() {
       .then((json) => setData(json))
       .catch((error) => console.error(error));
   }, []);
-
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
   const {
     container,
     titleContainer,
