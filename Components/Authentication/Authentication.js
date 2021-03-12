@@ -17,7 +17,7 @@ import icBack from "../../media/backList.png";
 import icLogo from "../../media/cate1.jpg";
 
 const Stack = createStackNavigator();
-
+//signUp
 const signUp = () => {
   const navigation = useNavigation();
   const [Name, setName] = useState({ value: "" });
@@ -29,17 +29,24 @@ const signUp = () => {
     const { Email } = useState({ value: "" });
     const { PassWord } = useState({ value: "" });  
     const { ReEnterPassword } = useState({ value: "" });
+    const [load, setLoading] = useState(true);
     // eslint-disable-next-line max-len
-    if (Name === "" || Email === "" || PassWord === "" || ReEnterPassword === "") {
-      alert("Please enter Email and PassWord");
+    if (Name === "") {
+      alert("Please enter Name");
+    } else if (Email === "") {
+      alert("Please enter Email");
+    } else if (Password === "") {
+      alert("Please enter PassWord");
+    } else if (ReEnterPassword === "") {
+      alert("Please enter ReEnterPassWord");
     } else {
-      const URL = "http://127.0.0.1/authen/SignUp.php";
+      const URL = "http://192.168.1.3/authen/SignUp.php";
       const headers = {
           Accept: "application/json",
           "Content-Type": "application.jon",
       };
       const Data = {
-        Name,
+        Name, 
         Email,
         PassWord,
         ReEnterPassword,
@@ -132,6 +139,7 @@ const signUp = () => {
   );
 };
 
+//signIn
 const signIn = () => {
   const navigation = useNavigation();
   const [Email, setEmail] = useState({ value: "" });
@@ -142,7 +150,7 @@ const signIn = () => {
     if (Email === "" || PassWord === "") {
       alert("Please enter Email and PassWord");
     } else {
-      const URL = "http://127.0.0.1/authen/SignIn.php";
+      const URL = "http://192.168.1.3/authen/SignIn.php";
       const headers = {
           Accept: "application/json",
           "Content-Type": "application.jon",
@@ -228,6 +236,42 @@ const signIn = () => {
     </View>
   );
 };
+const SignUp = () => {
+    const { Name } = useState({ value: "" });
+    const { Email } = useState({ value: "" });
+    const { PassWord } = useState({ value: "" });  
+    const { ReEnterPassword } = useState({ value: "" });
+    // eslint-disable-next-line max-len
+    if (Name === "" || Email === "" || PassWord === "" || ReEnterPassword === "") {
+      alert("Please enter Email and PassWord");
+    } else {
+      const URL = "http://192.168.1.3/authen/SignUp.php";
+      const headers = {
+          Accept: "application/json",
+          "Content-Type": "application.jon",
+      };
+      const Data = {
+        Name, 
+        Email,
+        PassWord,
+        ReEnterPassword,
+      };
+
+      fetch(URL, 
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify(Data) 
+        })
+        .then((response) => response.json())
+        .then((response) => {
+          alert(response[0].Message);
+        })
+        .catch((error) => {
+          alert(`error: ${error}`);
+        });
+    }
+  };
 export function Authentication() {
   return (
     <Stack.Navigator initialRouteName="signIn">
