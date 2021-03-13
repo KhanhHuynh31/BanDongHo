@@ -53,7 +53,7 @@ export function SignUp() {
         <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
-        <Text style={titleStyle}> Wearing a Dress</Text>
+        <Text style={titleStyle}> Buy a Watch</Text>
         <Image source={icLogo} style={iconStyle} />
       </View>
       <View>
