@@ -19,7 +19,13 @@ export default function App() {
           }}
         />
         <Stack.Screen name="CHANGE_INFO" component={ChangeInfo} />
-        <Stack.Screen name="AUTHENTICATION" component={Authentication} />
+        <Stack.Screen
+          name="AUTHENTICATION"
+          component={Authentication}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="ORDER_HISTORY" component={OrderHistory} />
       </Stack.Navigator>
     </NavigationContainer>
