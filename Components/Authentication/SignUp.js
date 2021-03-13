@@ -50,7 +50,7 @@ export function SignUp() {
   return (
     <View style={container}>
       <View style={row1}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
         <Text style={titleStyle}> Wearing a Dress</Text>
