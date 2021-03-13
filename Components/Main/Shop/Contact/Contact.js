@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import MapView from "react-native-maps";
 
-import phoneIcon from "../../../../media/cate1.jpg";
-import mailIcon from "../../../../media/cate2.jpg";
-import messageIcon from "../../../../media/cate3.jpg";
-import locationIcon from "../../../../media/watch.png";
+import phoneIcon from "../../../../media/phone.png";
+import mailIcon from "../../../../media/email.png";
+import messageIcon from "../../../../media/facebook.png";
+import locationIcon from "../../../../media/map.png";
 
 export function Contact() {
   const {
@@ -22,14 +22,14 @@ export function Contact() {
         <MapView
           style={{ width: width - 20, height: 250 }}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: 10.980780873413792,
+            longitude: 106.6744477007058,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.05,
           }}
         >
           <MapView.Marker
-            coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+            coordinate={{ latitude: 10.980780873413792, longitude: 106.6744477007058 }}
             title="Watch Shop"
             description="Shop Dong Ho TDMU"
           />
@@ -53,7 +53,7 @@ export function Contact() {
         </View>
         <View style={rowInfoContainer}>
           <Image source={messageIcon} style={imageStyle} />
-          <Text style={infoText}> (+84) 546738923</Text>
+          <Text style={infoText}> facebook.com/react_native_team1</Text>
         </View>
       </View>
     </View>
