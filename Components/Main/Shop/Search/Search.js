@@ -1,10 +1,23 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
+import React, { Component } from 'react';
+import { useNavigation } from "@react-navigation/native";
 
-export function Search({ navigation }) {
+import SearchView from './SearchView';
+import ProductDetail from '../ProductDetail/ProductDetail';
+
+export function Search() {
+  const navigation = useNavigation();
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Search Screen</Text>
-    </View>
+    <Navigator
+      initialRoute={{ name: 'SEARCH_VIEW' }}
+      renderScene={(route, navigator) => {
+        switch (route.name) {
+          case 'SEARCH_VIEW': return <SearchView navigator={navigator} />;
+          default: return <ProductDetail navigator={navigator} product={route.product} />;
+        }
+      }}
+    />
   );
 }
+
+
+export default Search;

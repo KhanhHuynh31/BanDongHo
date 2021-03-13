@@ -11,6 +11,11 @@ import {
 import product1 from "../../../../media/cate1.jpg";
 
 const { width } = Dimensions.get("window");
+<<<<<<< Updated upstream
+=======
+const url = "http://172.16.2.56/csdl/index.php";
+const urli = "http://172.16.2.56/csdl/images/product/";
+>>>>>>> Stashed changes
 export function TopProduct() {
   const navigation = useNavigation();
   const {

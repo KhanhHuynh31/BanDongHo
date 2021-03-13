@@ -14,6 +14,11 @@ import cate2 from "../../../../media/cate2.jpg";
 import cate3 from "../../../../media/cate3.jpg";
 
 const { width } = Dimensions.get("window");
+<<<<<<< Updated upstream
+=======
+const url = "http://192.168.56.1/csdl/index.php";
+const urli = "http://192.168.56.1/csdl/images/type/";
+>>>>>>> Stashed changes
 export function Category() {
   const navigation = useNavigation();
   const { wrapper, textStyle, imageStyle } = styles;
