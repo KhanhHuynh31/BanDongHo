@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
-import icLogo from "../../media/cate1.jpg";
+import icLogo from "../../media/logowatch.png";
 
 export function SignUp() {
   const navigation = useNavigation();
@@ -18,6 +18,15 @@ export function SignUp() {
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
   const [ReEnterPassword, setReEnterPassword] = useState({ value: "" });
+  const register = (email, name, password) =>
+    fetch("http://192.168.26.1/csdl/register.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, name, password }),
+    }).then((res) => res.text());
   // eslint-disable-next-line max-len
   const signUp = () => {
     if (Name == "") {
@@ -29,7 +38,8 @@ export function SignUp() {
     } else if (ReEnterPassword == "") {
       Alert.alert("Please enter ReEnterPassWord");
     } else {
-      Alert.alert("Please enter");
+      register(Email, Name, Password);
+      Alert.alert("Sign Up Success");
     }
   };
   const {
@@ -50,7 +60,7 @@ export function SignUp() {
   return (
     <View style={container}>
       <View style={row1}>
-        <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
         <Text style={titleStyle}> Buy a Watch</Text>
@@ -82,7 +92,7 @@ export function SignUp() {
             placeholder="Re-enter your password "
             secureTextEntry
           />
-          <TouchableOpacity style={bigButton}>
+          <TouchableOpacity style={bigButton} >
             <Text style={buttonText} onPress={signUp}>
               SIGN UP NOW
             </Text>

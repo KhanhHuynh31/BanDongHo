@@ -6,23 +6,21 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  alert,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
-import icLogo from "../../media/cate1.jpg";
+import icLogo from "../../media/logowatch.png";
 
 export function SignIn() {
   const navigation = useNavigation();
   const [Email, setEmail] = useState({ value: "" });
   const [PassWord, setPassWord] = useState({ value: "" });
   const signIn = () => {
-    const { Email } = useState({ value: "" });
-    const { PassWord } = useState({ value: "" });
-    if (Email === "" || PassWord === "") {
-      alert("Please enter Email and PassWord");
+    if (Email == "" || PassWord == "") {
+      Alert.alert("Please enter Email and PassWord");
     } else {
-      const URL = "http://192.168.1.3/authen/SignIn.php";
+      const URL = "http://192.168.26.1/csdl/SignIn.php";
       const headers = {
         Accept: "application/json",
         "Content-Type": "application.jon",
@@ -39,10 +37,10 @@ export function SignIn() {
       })
         .then((response) => response.json())
         .then((response) => {
-          alert(response[0].Message);
+          Alert.alert(response[0].Message);
         })
         .catch((error) => {
-          alert(`error: ${error}`);
+          Alert.alert(`error: ${error}`);
         });
     }
   };
@@ -62,7 +60,7 @@ export function SignIn() {
   return (
     <View style={container}>
       <View style={row1}>
-        <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
         <Text style={titleStyle}> Buy a Watch</Text>
@@ -83,7 +81,7 @@ export function SignIn() {
             secureTextEntry
           />
           <TouchableOpacity style={bigButton}>
-            <Text style={buttonText} onPress={SignIn}>
+            <Text style={buttonText} onPress={signIn}>
               SIGN IN NOW
             </Text>
           </TouchableOpacity>
