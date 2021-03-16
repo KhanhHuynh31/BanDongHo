@@ -14,36 +14,45 @@ import icLogo from "../../media/logowatch.png";
 
 export function SignIn() {
   const navigation = useNavigation();
-  const [Email, setEmail] = useState({ value: "" });
-  const [PassWord, setPassWord] = useState({ value: "" });
-  const signIn = () => {
-    if (Email == "" || PassWord == "") {
-      Alert.alert("Please enter Email and PassWord");
-    } else {
-      const URL = "http://192.168.26.1/csdl/SignIn.php";
-      const headers = {
+  const [Email, setUserEmail] = useState({ value: "" });
+  const [Password, setUserPassword] = useState({ value: "" });
+  const login = (email, password) =>
+    fetch("http://192.168.26.1/csdl/ezLogin.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
         Accept: "application/json",
-        "Content-Type": "application.jon",
-      };
-      const Data = {
-        Email,
-        PassWord,
-      };
+      },
+      body: JSON.stringify({ email, password }),
+    }).then((res) => res.text());
 
-      fetch(URL, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(Data),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          Alert.alert(response[0].Message);
-        })
-        .catch((error) => {
-          Alert.alert(`error: ${error}`);
-        });
+  const onSuccess = () => {
+    Alert.alert(
+      "Notice",
+      "Login successfully",
+      [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
+      { cancelable: false }
+    );
+  };
+
+  const onFail = () => {
+    Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
+  const signIn = () => {
+    if (Email == "") {
+      Alert.alert("Please enter email");
+    } else if (Password == "") {
+      Alert.alert("Please enter PassWord");
+    } else {
+      login(Email, Password).then((res) => {
+        if (res === "THANH_CONG") return onSuccess();
+        onFail();
+      });
     }
   };
+
   const {
     row1,
     iconStyle,
@@ -70,20 +79,17 @@ export function SignIn() {
         <View>
           <TextInput
             style={inputStyle}
-            // eslint-disable-next-line no-undef
-            onChangeText={(userEmail) => setEmail(userEmail)}
+            onChangeText={(Email) => setUserEmail(Email)}
             placeholder="Enter your email "
           />
           <TextInput
             style={inputStyle}
-            placeholder="Enter your password"
-            onChangeText={(userPassWord) => setPassWord(userPassWord)}
+            onChangeText={(PassWord) => setUserPassword(PassWord)}
+            placeholder="Enter your password "
             secureTextEntry
           />
           <TouchableOpacity style={bigButton}>
-            <Text style={buttonText} onPress={signIn}>
-              SIGN IN NOW
-            </Text>
+            <Text style={buttonText} onPress={signIn}>SIGN IN NOW</Text>
           </TouchableOpacity>
         </View>
       </View>

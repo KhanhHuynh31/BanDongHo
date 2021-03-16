@@ -28,6 +28,20 @@ export function SignUp() {
       body: JSON.stringify({ email, name, password }),
     }).then((res) => res.text());
   // eslint-disable-next-line max-len
+  const onSuccess = () => {
+    Alert.alert(
+      "Notice",
+      "Sign up successfully",
+      [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
+      { cancelable: false }
+    );
+  };
+
+  const onFail = () => {
+    Alert.alert("Notice", "Email has been used by other", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
   const signUp = () => {
     if (Name == "") {
       Alert.alert("Please enter Name");
@@ -38,8 +52,10 @@ export function SignUp() {
     } else if (ReEnterPassword == "") {
       Alert.alert("Please enter ReEnterPassWord");
     } else {
-      register(Email, Name, Password);
-      Alert.alert("Sign Up Success");
+      register(Email, Name, Password).then((res) => {
+        if (res === "THANH_CONG") return onSuccess();
+        onFail();
+      });
     }
   };
   const {
@@ -92,7 +108,7 @@ export function SignUp() {
             placeholder="Re-enter your password "
             secureTextEntry
           />
-          <TouchableOpacity style={bigButton} >
+          <TouchableOpacity style={bigButton}>
             <Text style={buttonText} onPress={signUp}>
               SIGN UP NOW
             </Text>
