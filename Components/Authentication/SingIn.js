@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Alert,
+  LogBox,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
@@ -16,6 +17,11 @@ export function SignIn() {
   const navigation = useNavigation();
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+  console.log(data);
   const login = (email, password) =>
     fetch("http://192.168.26.1/csdl/ezLogin.php", {
       method: "POST",
@@ -24,31 +30,42 @@ export function SignIn() {
         Accept: "application/json",
       },
       body: JSON.stringify({ email, password }),
-    }).then((res) => res.text());
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
 
   const onSuccess = () => {
-    Alert.alert(
-      "Notice",
-      "Login successfully",
-      [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
-      { cancelable: false }
-    );
+    if (data === "No") return onFail();
+    else {
+      Alert.alert(
+        "Notice",
+        `Welcome ${data.name}`,
+        [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
+        { cancelable: false }
+      );
+    }
   };
 
   const onFail = () => {
-    Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
-      cancelable: false,
-    });
+    if (data !== "No") return onSuccess();
+    else {
+      Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
+        cancelable: false,
+      });
+    }
   };
   const signIn = () => {
-    if (Email == "") {
+    if (Email === "") {
       Alert.alert("Please enter email");
-    } else if (Password == "") {
+    } else if (Password === "") {
       Alert.alert("Please enter PassWord");
     } else {
-      login(Email, Password).then((res) => {
-        if (res === "THANH_CONG") return onSuccess();
-        onFail();
+      login(Email, Password).then(() => {
+        if (data === "No") return onFail();
+        else {
+          return onSuccess();
+        }
       });
     }
   };
@@ -89,7 +106,9 @@ export function SignIn() {
             secureTextEntry
           />
           <TouchableOpacity style={bigButton}>
-            <Text style={buttonText} onPress={signIn}>SIGN IN NOW</Text>
+            <Text style={buttonText} onPress={signIn}>
+              SIGN IN NOW
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

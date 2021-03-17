@@ -38,19 +38,21 @@ export function SignUp() {
   };
 
   const onFail = () => {
-    Alert.alert("Notice", "Email has been used by other", [{ text: "OK" }], {
+    Alert.alert("Notice", "Sign up failed", [{ text: "OK" }], {
       cancelable: false,
     });
   };
   const signUp = () => {
-    if (Name == "") {
+    if (Name === "") {
       Alert.alert("Please enter Name");
-    } else if (Email == "") {
+    } else if (Email === "") {
       Alert.alert("Please enter Email");
-    } else if (Password == "") {
+    } else if (Password === "") {
       Alert.alert("Please enter PassWord");
-    } else if (ReEnterPassword == "") {
+    } else if (ReEnterPassword === "") {
       Alert.alert("Please enter ReEnterPassWord");
+    } else if (ReEnterPassword !== Password) {
+      Alert.alert("Password not match");
     } else {
       register(Email, Name, Password).then((res) => {
         if (res === "THANH_CONG") return onSuccess();
