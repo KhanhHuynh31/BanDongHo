@@ -7,7 +7,6 @@ import {
   Image,
   StyleSheet,
   Alert,
-  LogBox,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
@@ -17,10 +16,7 @@ export function SignIn() {
   const navigation = useNavigation();
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+  const [data, setData] = useState("No");
   console.log(data);
   const login = (email, password) =>
     fetch("http://192.168.26.1/csdl/ezLogin.php", {
@@ -36,24 +32,18 @@ export function SignIn() {
       .catch((error) => console.error(error));
 
   const onSuccess = () => {
-    if (data === "No") return onFail();
-    else {
       Alert.alert(
         "Notice",
         `Welcome ${data.name}`,
-        [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
+        [{ text: "OK", }],
         { cancelable: false }
       );
-    }
   };
 
   const onFail = () => {
-    if (data !== "No") return onSuccess();
-    else {
       Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
         cancelable: false,
       });
-    }
   };
   const signIn = () => {
     if (Email === "") {
@@ -63,9 +53,7 @@ export function SignIn() {
     } else {
       login(Email, Password).then(() => {
         if (data === "No") return onFail();
-        else {
           return onSuccess();
-        }
       });
     }
   };
