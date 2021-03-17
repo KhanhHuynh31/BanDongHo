@@ -27,12 +27,12 @@ export function SignUp() {
       },
       body: JSON.stringify({ email, name, password }),
     }).then((res) => res.text());
-  // eslint-disable-next-line max-len
+
   const onSuccess = () => {
     Alert.alert(
       "Notice",
       "Sign up successfully",
-      [{ text: "OK", onPress: navigation.navigate("HOME_VIEW") }],
+      [{ text: "OK", onPress: navigation.navigate("SIGN_IN") }],
       { cancelable: false }
     );
   };
