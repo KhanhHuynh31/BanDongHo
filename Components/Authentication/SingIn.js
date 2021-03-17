@@ -16,7 +16,7 @@ export function SignIn() {
   const navigation = useNavigation();
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
-  const [data, setData] = useState("No");
+  const [data, setData] = useState([]);
   console.log(data);
   const login = (email, password) =>
     fetch("http://192.168.26.1/csdl/ezLogin.php", {
