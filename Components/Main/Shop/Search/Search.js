@@ -5,7 +5,7 @@ import SearchView from './SearchView';
 import ProductDetail from '../ProductDetail/ProductDetail';
 
 export function Search() {
-  const navigation = useNavigation();
+  const navigator = useNavigation();
   return (
     <Navigator
       initialRoute={{ name: 'SEARCH_VIEW' }}
