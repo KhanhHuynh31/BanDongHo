@@ -7,6 +7,7 @@ import { Cart } from "./Cart/Cart";
 import { Contact } from "./Contact/Contact";
 import { Search } from "./Search/Search";
 import { Header } from "./Header";
+import "../../../global";
 
 const Tab = createBottomTabNavigator();
 export function Shop() {
@@ -38,7 +39,7 @@ export function Shop() {
         }}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Cart" component={Cart} options={{ tabBarBadge: 1 }} />
+        <Tab.Screen name="Cart" component={Cart} options={{ tabBarBadge: global.numCart }} />
         <Tab.Screen name="Contact" component={Contact} />
         <Tab.Screen name="Search" component={Search} />
       </Tab.Navigator>
