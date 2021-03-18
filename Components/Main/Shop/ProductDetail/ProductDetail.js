@@ -35,6 +35,19 @@ export function ProductDetail() {
     txtMaterial,
     txtColor,
   } = styles;
+<<<<<<< Updated upstream
+=======
+  const urli = "http://192.168.56.1/csdl/images/product/";
+  const register = (email, name, password) =>
+    fetch("http://192.168.56.1/csdl/register.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, name, password }),
+    }).then((res) => res.text());
+>>>>>>> Stashed changes
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>

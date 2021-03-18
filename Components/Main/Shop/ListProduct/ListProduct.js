@@ -29,6 +29,18 @@ export function ListProduct() {
     txtColor,
     txtShowDetail,
   } = styles;
+<<<<<<< Updated upstream
+=======
+  const url = `http://192.168.56.1/csdl/product_type.php?id_type=${itemId}`;
+  const urli = "http://192.168.56.1/csdl/images/product/";
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+>>>>>>> Stashed changes
   return (
     <View style={container}>
       <ScrollView style={wrapper}>
