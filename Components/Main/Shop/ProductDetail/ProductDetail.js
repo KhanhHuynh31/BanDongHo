@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import back from "../../../../media/backList.png";
 import cart from "../../../../media/cart.png";
+import "../../../../global";
 
 export function ProductDetail({ route }) {
   const navigation = useNavigation();
@@ -39,15 +40,6 @@ export function ProductDetail({ route }) {
     txtColor,
   } = styles;
   const urli = "http://192.168.26.1/csdl/images/product/";
-  const register = (email, name, password) =>
-    fetch("http://192.168.26.1/csdl/register.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ email, name, password }),
-    }).then((res) => res.text());
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>
@@ -57,7 +49,15 @@ export function ProductDetail({ route }) {
               <Image style={backStyle} source={back} />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => register("test1@123", "123", "test")}
+              onPress={() => {
+                navigation.navigate("Cart", {
+                  cartId: itemId,
+                  cartName: itemName,
+                  cartPrice: itemPrice,
+                  cartColor: itemColor,
+                });
+                global.numCart = 1;
+              }}
             >
               <Image style={cartStyle} source={cart} />
             </TouchableOpacity>

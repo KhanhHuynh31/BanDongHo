@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -11,33 +11,21 @@ import {
   Image,
 } from "react-native";
 import back from "../../../../media/backList.png";
-import cate1 from "../../../../media/cate1.jpg";
 
-const DATA = [
-  {
-    id: "1",
-    name: "dong ho deo tay nam Apple",
-    price: "100 USD",
-    quantity: "1",
-    color: "black",
-  },
-  {
-    id: "2",
-    name: "dong ho deo tay nam Apple 2",
-    price: "150 USD",
-    quantity: "1",
-    color: "black",
-  },
-  {
-    id: "31",
-    name: "dong ho deo tay nam Apple 3",
-    price: "170 USD",
-    quantity: "2",
-    color: "red",
-  },
-];
-export function Cart() {
+export function Cart({ route }) {
+  const { cartId } = route.params;
+  const { cartName } = route.params;
+  const { cartPrice } = route.params;
   const navigation = useNavigation();
+  const DATA = [
+    {
+      id: cartId,
+      name: cartName,
+      price: cartPrice,
+      quantity: 1,
+    },
+  ];
+  const urli = "http://192.168.26.1/csdl/images/product/";
   const {
     checkoutButton,
     checkoutTitle,
@@ -70,7 +58,10 @@ export function Cart() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={productStyle}>
-              <Image source={cate1} style={productImage} />
+              <Image
+                source={{ uri: `${urli}${item.id}.jpg` }}
+                style={productImage}
+              />
               <View style={[mainRight]}>
                 <View
                   style={{
@@ -79,12 +70,9 @@ export function Cart() {
                   }}
                 >
                   <Text style={txtName}>{item.name}</Text>
-                  <TouchableOpacity>
-                    <Text style={{ color: "#969696" }}>X</Text>
-                  </TouchableOpacity>
                 </View>
                 <View>
-                  <Text style={txtPrice}>Gia: {item.price}</Text>
+                  <Text style={txtPrice}>Price: {item.price} USD</Text>
                 </View>
                 <View style={productController}>
                   <View style={numberOfProduct}>
@@ -96,7 +84,10 @@ export function Cart() {
                       <Text>+</Text>
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity style={showDetailContainer}>
+                  <TouchableOpacity
+                    style={showDetailContainer}
+                    onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+                  >
                     <Text style={txtShowDetail}>SHOW DETAILS</Text>
                   </TouchableOpacity>
                 </View>

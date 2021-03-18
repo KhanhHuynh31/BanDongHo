@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
-import icLogo from "../../media/cate1.jpg";
+import icLogo from "../../media/logowatch.png";
 
 export function SignUp() {
   const navigation = useNavigation();
@@ -18,18 +18,46 @@ export function SignUp() {
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
   const [ReEnterPassword, setReEnterPassword] = useState({ value: "" });
-  // eslint-disable-next-line max-len
+  const register = (email, name, password) =>
+    fetch("http://192.168.26.1/csdl/register.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email, name, password }),
+    }).then((res) => res.text());
+
+  const onSuccess = () => {
+    Alert.alert(
+      "Notice",
+      "Sign up successfully",
+      [{ text: "OK", onPress: navigation.navigate("SIGN_IN") }],
+      { cancelable: false }
+    );
+  };
+
+  const onFail = () => {
+    Alert.alert("Notice", "Sign up failed", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
   const signUp = () => {
-    if (Name == "") {
+    if (Name === "") {
       Alert.alert("Please enter Name");
-    } else if (Email == "") {
+    } else if (Email === "") {
       Alert.alert("Please enter Email");
-    } else if (Password == "") {
+    } else if (Password === "") {
       Alert.alert("Please enter PassWord");
-    } else if (ReEnterPassword == "") {
+    } else if (ReEnterPassword === "") {
       Alert.alert("Please enter ReEnterPassWord");
+    } else if (ReEnterPassword !== Password) {
+      Alert.alert("Password not match");
     } else {
-      Alert.alert("Please enter");
+      register(Email, Name, Password).then((res) => {
+        if (res === "THANH_CONG") return onSuccess();
+        onFail();
+      });
     }
   };
   const {
@@ -50,7 +78,7 @@ export function SignUp() {
   return (
     <View style={container}>
       <View style={row1}>
-        <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
         <Text style={titleStyle}> Buy a Watch</Text>

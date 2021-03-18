@@ -4,17 +4,18 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { View, Image, SafeAreaView, Text } from "react-native";
-import { Menu } from "./Menu";
+import { ChangeInfo } from "../ChangeInfo/ChangeInfo";
 import { Shop } from "./Shop/Shop";
 import { Authentication } from "../Authentication/Authentication";
-
+import "../../global.js";
 import user from "../../media/user.png";
+import { OrderHistory } from "../OrderHistory/OrderHistory";
 
 const Drawer = createDrawerNavigator();
 export function Main() {
   return (
     <Drawer.Navigator
-      initialRouteName="Order History"
+      initialRouteName="Home"
       drawerContent={(props) => (
         <SafeAreaView style={{ flex: 1 }}>
           <View
@@ -33,14 +34,15 @@ export function Main() {
                 marginVertical: 20,
               }}
             />
-            <Text style={{}}>Nguyen Van A</Text>
+            <Text >{global.name}</Text>
           </View>
           <DrawerItemList {...props} />
         </SafeAreaView>
       )}
     >
-      <Drawer.Screen name="Order History" component={Shop} />
-      <Drawer.Screen name="Change Info" component={Menu} />
+      <Drawer.Screen name="Home" component={Shop} />
+      <Drawer.Screen name="Order History" component={OrderHistory} />
+      <Drawer.Screen name="Change Info" component={ChangeInfo} />
       <Drawer.Screen name="Sign out" component={Authentication} />
     </Drawer.Navigator>
   );

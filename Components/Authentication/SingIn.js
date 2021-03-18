@@ -6,46 +6,59 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  alert,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
-import icLogo from "../../media/cate1.jpg";
+import icLogo from "../../media/logowatch.png";
 
 export function SignIn() {
   const navigation = useNavigation();
-  const [Email, setEmail] = useState({ value: "" });
-  const [PassWord, setPassWord] = useState({ value: "" });
-  const signIn = () => {
-    const { Email } = useState({ value: "" });
-    const { PassWord } = useState({ value: "" });
-    if (Email === "" || PassWord === "") {
-      alert("Please enter Email and PassWord");
-    } else {
-      const URL = "http://192.168.1.3/authen/SignIn.php";
-      const headers = {
+  const [Email, setUserEmail] = useState({ value: "" });
+  const [Password, setUserPassword] = useState({ value: "" });
+  const [data, setData] = useState([]);
+  console.log(data);
+  const login = (email, password) =>
+    fetch("http://192.168.26.1/csdl/ezLogin.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
         Accept: "application/json",
-        "Content-Type": "application.jon",
-      };
-      const Data = {
-        Email,
-        PassWord,
-      };
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
 
-      fetch(URL, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(Data),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          alert(response[0].Message);
-        })
-        .catch((error) => {
-          alert(`error: ${error}`);
-        });
+  const onSuccess = () => {
+    global.name = data.name;
+    global.address = data.address;
+    global.phone = data.phone;
+    global.email = data.email;
+    Alert.alert("Notice", `Welcome ${data.name}`, [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
+
+  const onFail = () => {
+    Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
+  const signIn = () => {
+    if (Email === "") {
+      Alert.alert("Please enter email");
+    } else if (Password === "") {
+      Alert.alert("Please enter PassWord");
+    } else {
+      login(Email, Password).then(() => {
+        if (data === "No") return onFail();
+        return onSuccess();
+      });
     }
   };
+
   const {
     row1,
     iconStyle,
@@ -62,7 +75,7 @@ export function SignIn() {
   return (
     <View style={container}>
       <View style={row1}>
-        <TouchableOpacity onPress={() => navigation.navigate("MAIN")}>
+        <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
           <Image source={icBack} style={iconStyle} />
         </TouchableOpacity>
         <Text style={titleStyle}> Buy a Watch</Text>
@@ -72,20 +85,17 @@ export function SignIn() {
         <View>
           <TextInput
             style={inputStyle}
-            // eslint-disable-next-line no-undef
-            onChangeText={(userEmail) => setEmail(userEmail)}
+            onChangeText={(Email) => setUserEmail(Email)}
             placeholder="Enter your email "
           />
           <TextInput
             style={inputStyle}
-            placeholder="Enter your password"
-            onChangeText={(userPassWord) => setPassWord(userPassWord)}
+            onChangeText={(PassWord) => setUserPassword(PassWord)}
+            placeholder="Enter your password "
             secureTextEntry
           />
-          <TouchableOpacity style={bigButton}>
-            <Text style={buttonText} onPress={SignIn}>
-              SIGN IN NOW
-            </Text>
+          <TouchableOpacity style={bigButton} onPress={signIn}>
+            <Text style={buttonText}>SIGN IN NOW</Text>
           </TouchableOpacity>
         </View>
       </View>
