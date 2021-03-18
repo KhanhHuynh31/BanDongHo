@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -32,18 +32,19 @@ export function SignIn() {
       .catch((error) => console.error(error));
 
   const onSuccess = () => {
-      Alert.alert(
-        "Notice",
-        `Welcome ${data.name}`,
-        [{ text: "OK", }],
-        { cancelable: false }
-      );
+    global.name = data.name;
+    global.address = data.address;
+    global.phone = data.phone;
+    global.email = data.email;
+    Alert.alert("Notice", `Welcome ${data.name}`, [{ text: "OK" }], {
+      cancelable: false,
+    });
   };
 
   const onFail = () => {
-      Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
-        cancelable: false,
-      });
+    Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
+      cancelable: false,
+    });
   };
   const signIn = () => {
     if (Email === "") {
@@ -53,7 +54,7 @@ export function SignIn() {
     } else {
       login(Email, Password).then(() => {
         if (data === "No") return onFail();
-          return onSuccess();
+        return onSuccess();
       });
     }
   };
@@ -93,10 +94,8 @@ export function SignIn() {
             placeholder="Enter your password "
             secureTextEntry
           />
-          <TouchableOpacity style={bigButton}>
-            <Text style={buttonText} onPress={signIn}>
-              SIGN IN NOW
-            </Text>
+          <TouchableOpacity style={bigButton} onPress={signIn}>
+            <Text style={buttonText}>SIGN IN NOW</Text>
           </TouchableOpacity>
         </View>
       </View>

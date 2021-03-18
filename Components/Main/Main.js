@@ -7,7 +7,7 @@ import { View, Image, SafeAreaView, Text } from "react-native";
 import { ChangeInfo } from "../ChangeInfo/ChangeInfo";
 import { Shop } from "./Shop/Shop";
 import { Authentication } from "../Authentication/Authentication";
-
+import "../../global.js";
 import user from "../../media/user.png";
 import { OrderHistory } from "../OrderHistory/OrderHistory";
 
@@ -34,7 +34,7 @@ export function Main() {
                 marginVertical: 20,
               }}
             />
-            <Text style={{}}>Nguyen Van A</Text>
+            <Text >{global.name}</Text>
           </View>
           <DrawerItemList {...props} />
         </SafeAreaView>
