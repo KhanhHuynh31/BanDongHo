@@ -36,12 +36,15 @@ export function SignIn() {
     global.address = data.address;
     global.phone = data.phone;
     global.email = data.email;
+    global.isSignIn = 1;
+    global.id = data.id;
     Alert.alert("Notice", `Welcome ${data.name}`, [{ text: "OK" }], {
       cancelable: false,
     });
   };
 
   const onFail = () => {
+    global.IsSignIn = 0;
     Alert.alert("Notice", "Wrong user name or password", [{ text: "OK" }], {
       cancelable: false,
     });

@@ -8,6 +8,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import back from "../../../../media/backList.png";
 import cart from "../../../../media/cart.png";
@@ -40,6 +41,22 @@ export function ProductDetail({ route }) {
     txtColor,
   } = styles;
   const urli = "http://192.168.26.1/csdl/images/product/";
+  const checkLogin = () => {
+    if (global.isSignIn === 0) {
+      Alert.alert("Notice", "You must SignIn to buy", [{ text: "OK" }], {
+        cancelable: false,
+      });
+      navigation.navigate("AUTHENTICATION");
+    } else {
+      navigation.navigate("Cart", {
+        cartId: itemId,
+        cartName: itemName,
+        cartPrice: itemPrice,
+        cartColor: itemColor,
+      });
+      global.numCart = 1;
+    }
+  };
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>
@@ -48,17 +65,7 @@ export function ProductDetail({ route }) {
             <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
               <Image style={backStyle} source={back} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Cart", {
-                  cartId: itemId,
-                  cartName: itemName,
-                  cartPrice: itemPrice,
-                  cartColor: itemColor,
-                });
-                global.numCart = 1;
-              }}
-            >
+            <TouchableOpacity onPress={checkLogin}>
               <Image style={cartStyle} source={cart} />
             </TouchableOpacity>
           </View>
