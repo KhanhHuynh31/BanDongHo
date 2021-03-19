@@ -32,7 +32,7 @@ export function OrderHistory() {
     body,
     orderRow,
   } = styles;
-  
+
   return (
     <SafeAreaView style={wrapper}>
       <View style={header}>
@@ -93,7 +93,7 @@ export function OrderHistory() {
                     Total:
                   </Text>
                   <Text style={{ color: "#C21C70", fontWeight: "bold" }}>
-                    {item.total}
+                    {item.total} $
                   </Text>
                 </View>
               </View>
