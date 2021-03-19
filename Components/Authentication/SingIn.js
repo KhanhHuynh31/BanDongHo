@@ -18,7 +18,7 @@ export function SignIn() {
   const [Password, setUserPassword] = useState({ value: "" });
   const [data, setData] = useState([]);
   console.log(data);
-  const login = (email, password) =>
+  const login = (email, password) => {
     fetch("http://192.168.26.1/csdl/ezLogin.php", {
       method: "POST",
       headers: {
@@ -30,7 +30,7 @@ export function SignIn() {
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-
+  };
   const onSuccess = () => {
     global.name = data.name;
     global.address = data.address;
@@ -55,10 +55,9 @@ export function SignIn() {
     } else if (Password === "") {
       Alert.alert("Please enter PassWord");
     } else {
-      login(Email, Password).then(() => {
-        if (data === "No") return onFail();
-        return onSuccess();
-      });
+      login(Email, Password);
+      if (data === "No") return onFail();
+      return onSuccess();
     }
   };
 
