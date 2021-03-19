@@ -27,6 +27,7 @@ export function Cart({ route }) {
       quantity: 1,
     },
   ];
+  global.total = cartPrice;
   const urli = "http://192.168.26.1/csdl/images/product/";
   const {
     checkoutButton,
@@ -45,26 +46,7 @@ export function Cart({ route }) {
     titleStyle,
     txtShowDetail,
   } = styles;
-  const sendOrder = (idCustomer, total) => {
-    fetch("http://192.168.26.1/csdl/sendorder.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ idCustomer, total }),
-    }).then((res) => res.text());
-  };
-  const onSuccess = () => {
-    Alert.alert("Notice", "Buy successfully", [{ text: "OK" }], {
-      cancelable: false,
-    });
-  };
-  const onFail = () => {
-    Alert.alert("Notice", "Buy failed", [{ text: "OK" }], {
-      cancelable: false,
-    });
-  };
+
   return (
     <SafeAreaView style={container}>
       <View style={wrapper}>
@@ -94,7 +76,7 @@ export function Cart({ route }) {
                   <Text style={txtName}>{item.name}</Text>
                 </View>
                 <View>
-                  <Text style={txtPrice}>Price: {item.price} USD</Text>
+                  <Text style={txtPrice}>Price: {global.total} USD</Text>
                 </View>
                 <View style={productController}>
                   <View style={numberOfProduct}>
@@ -117,16 +99,35 @@ export function Cart({ route }) {
             </View>
           )}
         />
-        <TouchableOpacity
-          style={checkoutButton}
-          onPress={sendOrder(global.id, global.total)}
-        >
-          <Text style={checkoutTitle}>TOTAL CHECKOUT NOW</Text>
+        <TouchableOpacity style={checkoutButton} onPress={() => checkOut()}>
+          <Text style={checkoutTitle}>TOTAL {global.total} $ CHECKOUT NOW</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
+const sendOrder = (idCustomer, total) => {
+  fetch("http://192.168.26.1/csdl/sendorder.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ idCustomer, total }),
+  }).then((res) => res.text());
+};
+
+const checkOut = () => {
+  if (sendOrder(global.id, global.total) !== "No") {
+    Alert.alert("Notice", "Buy successfully", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  } else {
+    Alert.alert("Notice", "Buy failed", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  }
+};
 const { width } = Dimensions.get("window");
 const imageWidth = width / 4;
 const imageHeight = (imageWidth * 452) / 361;

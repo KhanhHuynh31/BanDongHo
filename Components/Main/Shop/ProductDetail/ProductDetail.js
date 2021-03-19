@@ -123,6 +123,7 @@ export function ProductDetail({ route }) {
   );
 }
 const { width } = Dimensions.get("window");
+// eslint-disable-next-line no-mixed-operators
 const swiperWidth = width / 1.8 - 30;
 const swiperHeight = (swiperWidth * 452) / 361;
 

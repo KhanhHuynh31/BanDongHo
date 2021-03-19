@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -12,9 +12,18 @@ import {
   SafeAreaView,
 } from "react-native";
 import back from "../../media/backList.png";
+import "../../global";
 
 export function OrderHistory() {
   const navigation = useNavigation();
+  const url = `http://192.168.26.1/csdl/order_history.php?id_customer=${global.id}`;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
   const {
     wrapper,
     header,
@@ -23,20 +32,7 @@ export function OrderHistory() {
     body,
     orderRow,
   } = styles;
-  const DATA = [
-    {
-      id: "1",
-      time: "25:25",
-      status: "success",
-      total: "700",
-    },
-    {
-      id: "2",
-      time: "62:25",
-      status: "pending",
-      total: "200",
-    },
-  ];
+  
   return (
     <SafeAreaView style={wrapper}>
       <View style={header}>
@@ -50,7 +46,7 @@ export function OrderHistory() {
         <ScrollView>
           <FlatList
             contentContainerStyle={{ margin: 4 }}
-            data={DATA}
+            data={data}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={orderRow}>
@@ -74,7 +70,7 @@ export function OrderHistory() {
                   <Text style={{ color: "#9A9A9A", fontWeight: "bold" }}>
                     OrderTime:
                   </Text>
-                  <Text style={{ color: "#C21C70" }}>{item.time}</Text>
+                  <Text style={{ color: "#C21C70" }}>{item.date_order}</Text>
                 </View>
                 <View
                   style={{
