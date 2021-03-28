@@ -39,7 +39,12 @@ export function Shop() {
         }}
       >
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Cart" component={Cart} options={{ tabBarBadge: global.numCart }} />
+        <Tab.Screen
+          name="Cart"
+          component={Cart}
+          options={{ tabBarBadge: global.numCart }}
+          initialParams={{ cartId: "0" }}
+        />
         <Tab.Screen name="Contact" component={Contact} />
         <Tab.Screen name="Search" component={Search} />
       </Tab.Navigator>

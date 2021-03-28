@@ -43,7 +43,7 @@ export function Main() {
       <Drawer.Screen name="Home" component={Shop} />
       <Drawer.Screen name="Order History" component={OrderHistory} />
       <Drawer.Screen name="Change Info" component={ChangeInfo} />
-      <Drawer.Screen name="Sign out" component={Authentication} />
+      <Drawer.Screen name="Sign In" component={Authentication} />
     </Drawer.Navigator>
   );
 }

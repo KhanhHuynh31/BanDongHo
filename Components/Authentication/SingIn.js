@@ -11,14 +11,16 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import icBack from "../../media/backList.png";
 import icLogo from "../../media/logowatch.png";
+import "../../global";
 
 export function SignIn() {
   const navigation = useNavigation();
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ value: "No" });
   console.log(data);
-  const login = (email, password) => {
+
+  function login(email, password) {
     fetch("http://192.168.26.1/csdl/ezLogin.php", {
       method: "POST",
       headers: {
@@ -30,7 +32,7 @@ export function SignIn() {
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-  };
+  }
   const onSuccess = () => {
     global.name = data.name;
     global.address = data.address;
@@ -38,9 +40,10 @@ export function SignIn() {
     global.email = data.email;
     global.isSignIn = 1;
     global.id = data.id;
-    Alert.alert("Notice", `Welcome ${data.name}`, [{ text: "OK" }], {
+    Alert.alert("Notice", "Login Success", [{ text: "OK" }], {
       cancelable: false,
     });
+    navigation.navigate("HOME_VIEW");
   };
 
   const onFail = () => {
@@ -56,7 +59,7 @@ export function SignIn() {
       Alert.alert("Please enter PassWord");
     } else {
       login(Email, Password);
-      if (data === "No") return onFail();
+      if (data === "No" || data.value === "No") return onFail();
       return onSuccess();
     }
   };
