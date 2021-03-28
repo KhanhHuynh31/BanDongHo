@@ -6,3 +6,4 @@ global.numCart = "0";
 global.isSignIn = 0;
 global.id = "";
 global.total = "0";
+global.searchText = "";

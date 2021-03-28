@@ -28,9 +28,10 @@ export function ChangeInfo() {
       body: JSON.stringify({ email, name, address, phone }),
     }).then((res) => res.text());
   const onSuccess = () => {
-    Alert.alert("Notice", "Change successfully", [{ text: "OK" }], {
+    Alert.alert("Notice", "Change success", [{ text: "OK" }], {
       cancelable: false,
     });
+    navigation.navigate("HOME_VIEW");
   };
 
   const onFail = () => {
