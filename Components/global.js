@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 module.exports = {
     addProductToCart: null,
     incrQuantity: null,
@@ -6,4 +7,9 @@ module.exports = {
     onSignIn: null,
     gotoSearch: null,
     setArraySearch: null
+=======
+global.searchText = "";
+module.exports = {
+    refreshSearchData: null
+>>>>>>> Stashed changes
 };

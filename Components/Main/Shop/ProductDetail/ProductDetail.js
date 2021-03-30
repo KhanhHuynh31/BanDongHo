@@ -35,7 +35,12 @@ export function ProductDetail() {
     txtMaterial,
     txtColor,
   } = styles;
+<<<<<<< Updated upstream
   return (
+=======
+  const urli = "http://192.168.182.1/csdl/images/product/";
+    return (
+>>>>>>> Stashed changes
     <View style={wrapper}>
       <ScrollView style={wrapper}>
         <View style={cardStyle}>

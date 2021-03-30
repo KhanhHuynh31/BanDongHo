@@ -1,10 +1,16 @@
+<<<<<<< Updated upstream
 import React from "react";
+=======
+import React, { useEffect, useState } from "react";
+
+>>>>>>> Stashed changes
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
   Dimensions,
   StyleSheet,
+  FlatList,
   Image,
   TouchableOpacity,
 } from "react-native";
@@ -14,6 +20,11 @@ import cate2 from "../../../../media/cate2.jpg";
 import cate3 from "../../../../media/cate3.jpg";
 
 const { width } = Dimensions.get("window");
+<<<<<<< Updated upstream
+=======
+const url = "http://192.168.0.14/csdl/index.php";
+const urli = "http://192.168.0.14/csdl/images/type/";
+>>>>>>> Stashed changes
 export function Category() {
   const navigation = useNavigation();
   const { wrapper, textStyle, imageStyle } = styles;
@@ -22,6 +33,7 @@ export function Category() {
       <View style={{ justifyContent: "center", height: 50 }}>
         <Text style={textStyle}>LIST OF CATEGORY</Text>
       </View>
+<<<<<<< Updated upstream
       <View style={{ justifyContent: "flex-end", flex: 4 }}>
         <Swiper showsPagination width={imageWidth} height={imageHeight}>
           <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
@@ -29,6 +41,29 @@ export function Category() {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
             <Image source={cate2} style={imageStyle} />
+=======
+      <FlatList
+        horizontal={true}
+        autoplay
+        autoplayDelay={10}
+        autoplayLoop
+        showPagination
+        data={data.type}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("LIST_PRODUCT", {
+                itemId: item.id,
+                itemName: item.name,
+              });
+            }}
+          >
+            <Image
+              style={styles.imageStyle}
+              source={{ uri: `${urli}${item.id}.jpg` }}
+            />
+            <Text>{item.name}</Text>
+>>>>>>> Stashed changes
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("LIST_PRODUCT")}>
             <Image source={cate3} style={imageStyle} />
