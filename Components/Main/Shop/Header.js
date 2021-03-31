@@ -3,17 +3,16 @@ import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { TextInput } from "react-native-gesture-handler";
-import "../../../global"
+import "../../../global";
 import search from "../../../api/searchProduct";
 
 const { height } = Dimensions.get("window");
 export function Header() {
   const navigation = useNavigation();
   const onSubmitSearch = () => {
-    search(searchText)
+    search()
       .then(arrProduct => global.refreshSearchData(arrProduct))
       .catch(err => console.log(err));
-
   };
   const { wrapper, row1, textInput, iconStyle, titleStyle } = styles;
   return (
@@ -32,6 +31,7 @@ export function Header() {
         style={textInput}
         placeholder="What do you want to buy?"
         underlineColorAndroid="transparent"
+        // eslint-disable-next-line no-return-assign
         onChangeText={text => global.searchText = text}
         onSubmitEditing={onSubmitSearch}
       />

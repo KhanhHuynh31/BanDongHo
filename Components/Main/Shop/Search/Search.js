@@ -28,10 +28,10 @@ export function Search() {
   }, []);
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, [])
+  }, []);
   const refresh = (searchResult) => {
-    setData(searchResult)
-  }
+    setData(searchResult);
+  };
   global.refreshSearchData = (searchResult) => refresh(searchResult);
 
   const {

@@ -8,4 +8,5 @@ global.id = "";
 global.total = "0";
 global.searchText = "";
 module.exports = {
-    refreshSearchData: null}
+    refreshSearchData: null
+};

@@ -17,34 +17,47 @@ export function SignIn() {
   const navigation = useNavigation();
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
-  const [data, setData] = useState({ value: "No" });
+  const [data, setData] = useState("");
+  global.name = data.name;
+  global.id = data.id;
+  global.address = data.address;
+  global.phone = data.phone;
+  global.email = data.email;
   console.log(data);
-
-  function login(email, password) {
-    fetch("http://192.168.26.1/csdl/ezLogin.php", {
+  const login = (email, password) =>
+    fetch("http://192.168.26.1/csdl/checkLogin.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({ email, password }),
+    }).then((res) => res.text());
+
+  const loadUser = (email) => {
+    fetch("http://192.168.26.1/csdl/loadUser.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ email }),
     })
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-  }
+  };
   const onSuccess = () => {
-    global.name = data.name;
-    global.address = data.address;
-    global.phone = data.phone;
-    global.email = data.email;
-    global.isSignIn = 1;
-    global.id = data.id;
     Alert.alert("Notice", "Login Success", [{ text: "OK" }], {
       cancelable: false,
     });
+
     navigation.navigate("HOME_VIEW");
   };
+  const refresh = (searchResult) => {
+    setData(searchResult);
+  };
+  global.refreshSearchData = (searchResult) => refresh(searchResult);
 
   const onFail = () => {
     global.IsSignIn = 0;
@@ -58,9 +71,20 @@ export function SignIn() {
     } else if (Password === "") {
       Alert.alert("Please enter PassWord");
     } else {
-      login(Email, Password);
-      if (data === "No" || data.value === "No") return onFail();
-      return onSuccess();
+      login(Email, Password).then((res) => {
+        if (res !== "No") {
+          loadUser(Email);
+          global.name = data.name;
+          global.id = data.id;
+          global.address = data.address;
+          global.phone = data.phone;
+          global.email = data.email;
+          global.isSignIn = 1;
+          return onSuccess();
+        }
+        onFail();
+        console.log(res);
+      });
     }
   };
 
@@ -99,7 +123,7 @@ export function SignIn() {
             placeholder="Enter your password "
             secureTextEntry
           />
-          <TouchableOpacity style={bigButton} onPress={signIn}>
+          <TouchableOpacity style={bigButton} onPress={() => signIn()} >
             <Text style={buttonText}>SIGN IN NOW</Text>
           </TouchableOpacity>
         </View>

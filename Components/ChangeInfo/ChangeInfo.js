@@ -93,6 +93,7 @@ export function ChangeInfo() {
           style={textInput}
           placeholder="Enter your phone number"
           autoCapitalize="none"
+          keyboardType="numeric"
           defaultValue={global.phone}
           onChangeText={(Phone) => setUserPhone(Phone)}
           underlineColorAndroid="transparent"
