@@ -13,12 +13,14 @@ import icBack from "../../media/backList.png";
 import icLogo from "../../media/logowatch.png";
 
 export function SignUp() {
+
   const navigation = useNavigation();
   const [Name, setName] = useState({ value: "" });
   const [Email, setUserEmail] = useState({ value: "" });
   const [Password, setUserPassword] = useState({ value: "" });
   const [ReEnterPassword, setReEnterPassword] = useState({ value: "" });
-  const register = (email, name, password) =>
+
+  const register = (email, name, password) => 
     fetch("http://192.168.26.1/csdl/register.php", {
       method: "POST",
       headers: {
@@ -27,6 +29,7 @@ export function SignUp() {
       },
       body: JSON.stringify({ email, name, password }),
     }).then((res) => res.text());
+  
 
   const onSuccess = () => {
     Alert.alert(
@@ -38,7 +41,7 @@ export function SignUp() {
   };
 
   const onFail = () => {
-    Alert.alert("Notice", "Sign up failed", [{ text: "OK" }], {
+    Alert.alert("Notice", "Email has exists", [{ text: "OK" }], {
       cancelable: false,
     });
   };
@@ -57,6 +60,7 @@ export function SignUp() {
       register(Email, Name, Password).then((res) => {
         if (res === "THANH_CONG") return onSuccess();
         onFail();
+        console.log(res);
       });
     }
   };

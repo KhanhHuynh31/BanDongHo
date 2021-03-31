@@ -40,7 +40,6 @@ export function Cart({ route }) {
     txtName,
     txtPrice,
     productImage,
-    numberOfProduct,
     showDetailContainer,
     backStyle,
     titleStyle,
@@ -79,15 +78,6 @@ export function Cart({ route }) {
                   <Text style={txtPrice}>Price: {global.total} USD</Text>
                 </View>
                 <View style={productController}>
-                  <View style={numberOfProduct}>
-                    <TouchableOpacity>
-                      <Text>-</Text>
-                    </TouchableOpacity>
-                    <Text>{item.quantity}</Text>
-                    <TouchableOpacity>
-                      <Text>+</Text>
-                    </TouchableOpacity>
-                  </View>
                   <TouchableOpacity
                     style={showDetailContainer}
                     onPress={() => navigation.navigate("PRODUCT_DETAIL")}
@@ -186,11 +176,6 @@ const styles = StyleSheet.create({
   },
   productController: {
     flexDirection: "row",
-  },
-  numberOfProduct: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
   txtName: {
     paddingLeft: 20,
