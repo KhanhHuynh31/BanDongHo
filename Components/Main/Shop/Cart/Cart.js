@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -10,25 +10,33 @@ import {
   StyleSheet,
   Image,
   Alert,
+  Pressable,
 } from "react-native";
 import back from "../../../../media/backList.png";
 import "../../../../global";
 
-export function Cart({ route }) {
-  const { cartId } = route.params;
-  const { cartName } = route.params;
-  const { cartPrice } = route.params;
+export function Cart() {
   const navigation = useNavigation();
-  const DATA = [
-    {
-      id: cartId,
-      name: cartName,
-      price: cartPrice,
-      quantity: 1,
-    },
-  ];
-  global.total = cartPrice;
+  const url = `http://192.168.26.1/csdl/load_cart.php?id_user=${global.id}`;
   const urli = "http://192.168.26.1/csdl/images/product/";
+  const [data, setData] = useState([]);
+  let Total = 0;
+  useEffect(() => {
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  });
+  const deleteCart = (IdCart) => {
+    fetch("http://192.168.26.1/csdl/delete_cart.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ IdCart }),
+    }).then((res) => res.text());
+  };
   const {
     checkoutButton,
     checkoutTitle,
@@ -45,7 +53,32 @@ export function Cart({ route }) {
     titleStyle,
     txtShowDetail,
   } = styles;
+  data.forEach((item) => {
+    Total += parseInt(item.DonGia, 10);
+  });
+  const sendOrder = (idCustomer, total) => {
+    fetch("http://192.168.26.1/csdl/sendorder.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ idCustomer, total }),
+    }).then((res) => res.text());
+  };
 
+  const checkOut = (Total) => {
+    if (sendOrder(global.id, Total) !== "No") {
+      Alert.alert("Notice", "Buy successful", [{ text: "OK" }], {
+        cancelable: false,
+      });
+      navigation.navigate("HOME_VIEW");
+    } else {
+      Alert.alert("Notice", "Buy failed", [{ text: "OK" }], {
+        cancelable: false,
+      });
+    }
+  };
   return (
     <SafeAreaView style={container}>
       <View style={wrapper}>
@@ -57,12 +90,12 @@ export function Cart({ route }) {
         </TouchableOpacity>
         <FlatList
           contentContainerStyle={{ margin: 4 }}
-          data={DATA}
-          keyExtractor={(item) => item.id.toString()}
+          data={data}
+          keyExtractor={(item) => item.idCart.toString()}
           renderItem={({ item }) => (
             <View style={productStyle}>
               <Image
-                source={{ uri: `${urli}${item.id}.jpg` }}
+                source={{ uri: `${urli}${item.IdSanPham}.jpg` }}
                 style={productImage}
               />
               <View style={[mainRight]}>
@@ -72,52 +105,44 @@ export function Cart({ route }) {
                     flexDirection: "row",
                   }}
                 >
-                  <Text style={txtName}>{item.name}</Text>
+                  <Text style={txtName}>{item.TenSanPham}</Text>
+                  <Pressable onPress={() => deleteCart(item.idCart)}>
+                    <Text styles={{ fontSize: 20, color: "#FF0000" }}>X</Text>
+                  </Pressable>
+
                 </View>
                 <View>
-                  <Text style={txtPrice}>Price: {global.total} USD</Text>
+                  <Text style={txtPrice}>Price: {item.DonGia}USD</Text>
                 </View>
                 <View style={productController}>
                   <TouchableOpacity
                     style={showDetailContainer}
-                    onPress={() => navigation.navigate("PRODUCT_DETAIL")}
+                    onPress={() =>
+                      navigation.navigate("PRODUCT_DETAIL", {
+                        itemId: item.IdSanPham,
+                        itemName: item.TenSanPham,
+                        itemPrice: item.DonGia,
+                        itemColor: item.MauSac,
+                        itemMaterial: item.ChatLieu,
+                        itemDescription: item.MoTa,
+                      })
+                    }
                   >
                     <Text style={txtShowDetail}>SHOW DETAILS</Text>
                   </TouchableOpacity>
                 </View>
               </View>
+
             </View>
           )}
         />
-        <TouchableOpacity style={checkoutButton} onPress={() => checkOut()}>
-          <Text style={checkoutTitle}>TOTAL {global.total} $ CHECKOUT NOW</Text>
+        <TouchableOpacity style={checkoutButton} onPress={() => checkOut(Total)}>
+          <Text style={checkoutTitle}>TOTAL {Total} $ CHECKOUT NOW</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
-const sendOrder = (idCustomer, total) => {
-  fetch("http://192.168.26.1/csdl/sendorder.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ idCustomer, total }),
-  }).then((res) => res.text());
-};
-
-const checkOut = () => {
-  if (sendOrder(global.id, global.total) !== "No") {
-    Alert.alert("Notice", "Buy successfully", [{ text: "OK" }], {
-      cancelable: false,
-    });
-  } else {
-    Alert.alert("Notice", "Buy failed", [{ text: "OK" }], {
-      cancelable: false,
-    });
-  }
-};
 const { width } = Dimensions.get("window");
 const imageWidth = width / 4;
 const imageHeight = (imageWidth * 452) / 361;

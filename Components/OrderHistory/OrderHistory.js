@@ -23,7 +23,7 @@ export function OrderHistory() {
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
-  }, []);
+  });
   const {
     wrapper,
     header,

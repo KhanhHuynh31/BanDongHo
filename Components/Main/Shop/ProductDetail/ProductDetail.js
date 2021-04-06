@@ -40,7 +40,34 @@ export function ProductDetail({ route }) {
     txtMaterial,
     txtColor,
   } = styles;
+
+  const sendCart = (IdKhachHang, IdSanPham, TenSanPham, DonGia, MauSac, ChatLieu, MoTa) =>
+    fetch("http://192.168.26.1/csdl/insert_cart.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ IdKhachHang, IdSanPham, TenSanPham, DonGia, MauSac, ChatLieu, MoTa }),
+    }).then((res) => res.text());
+
   const urli = "http://192.168.26.1/csdl/images/product/";
+  const onSuccess = () => {
+    Alert.alert(
+      "Notice",
+      "Add cart successfully",
+      [{ text: "OK" }],
+      { cancelable: false }
+    );
+    global.numcart = "1";
+    navigation.navigate("Cart");
+  };
+
+  const onFail = () => {
+    Alert.alert("Notice", "Add cart error", [{ text: "OK" }], {
+      cancelable: false,
+    });
+  };
   const checkLogin = () => {
     if (global.isSignIn === 0) {
       Alert.alert("Notice", "You must SignIn to buy", [{ text: "OK" }], {
@@ -48,15 +75,15 @@ export function ProductDetail({ route }) {
       });
       navigation.navigate("AUTHENTICATION");
     } else {
-      navigation.navigate("Cart", {
-        cartId: itemId,
-        cartName: itemName,
-        cartPrice: itemPrice,
-        cartColor: itemColor,
-      });
-      global.numCart = 1;
+      sendCart(global.id, itemId, itemName, itemPrice, itemColor, itemMaterial, itemDescription)
+        .then((res) => {
+          console.log(res);
+          if (res === "THANH_CONG") return onSuccess();
+          onFail();
+        });
     }
   };
+
   return (
     <View style={wrapper}>
       <ScrollView style={wrapper}>
