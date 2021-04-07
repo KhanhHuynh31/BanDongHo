@@ -37,6 +37,16 @@ export function Cart() {
       body: JSON.stringify({ IdCart }),
     }).then((res) => res.text());
   };
+  const deleteAllCart = (IdUser) => {
+    fetch("http://192.168.26.1/csdl/delete_all_cart.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ IdUser }),
+    }).then((res) => res.text());
+  };
   const {
     checkoutButton,
     checkoutTitle,
@@ -69,6 +79,7 @@ export function Cart() {
 
   const checkOut = (Total) => {
     if (sendOrder(global.id, Total) !== "No") {
+      //deleteAllCart(global.id);
       Alert.alert("Notice", "Buy successful", [{ text: "OK" }], {
         cancelable: false,
       });
@@ -80,6 +91,7 @@ export function Cart() {
     }
   };
   return (
+
     <SafeAreaView style={container}>
       <View style={wrapper}>
         <TouchableOpacity onPress={() => navigation.navigate("HOME_VIEW")}>
@@ -107,7 +119,7 @@ export function Cart() {
                 >
                   <Text style={txtName}>{item.TenSanPham}</Text>
                   <Pressable onPress={() => deleteCart(item.idCart)}>
-                    <Text styles={{ fontSize: 20, color: "#FF0000" }}>X</Text>
+                    <Text>X</Text>
                   </Pressable>
 
                 </View>

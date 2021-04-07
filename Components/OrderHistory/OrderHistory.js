@@ -18,6 +18,7 @@ export function OrderHistory() {
   const navigation = useNavigation();
   const url = `http://192.168.26.1/csdl/order_history.php?id_customer=${global.id}`;
   const [data, setData] = useState([]);
+
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
