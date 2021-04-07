@@ -37,6 +37,7 @@ export function Cart() {
       body: JSON.stringify({ IdCart }),
     }).then((res) => res.text());
   };
+  /*
   const deleteAllCart = (IdUser) => {
     fetch("http://192.168.26.1/csdl/delete_all_cart.php", {
       method: "POST",
@@ -47,6 +48,7 @@ export function Cart() {
       body: JSON.stringify({ IdUser }),
     }).then((res) => res.text());
   };
+  */
   const {
     checkoutButton,
     checkoutTitle,
